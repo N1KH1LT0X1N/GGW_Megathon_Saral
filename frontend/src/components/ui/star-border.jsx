@@ -15,7 +15,8 @@ export function StarBorder({
   return (
     <Component
       className={cn(
-        'relative inline-block py-[1px] overflow-hidden rounded-[20px]',
+        // make the outer wrapper inline and small by default; callers can opt-in to larger sizes
+        'relative inline-block overflow-hidden rounded-[14px] text-sm',
         className
       )}
       {...props}
@@ -41,7 +42,8 @@ export function StarBorder({
         }}
       />
       <div className={cn(
-        'relative z-10 border text-center text-base py-4 px-6 rounded-[20px]',
+        // reduce internal padding so buttons look like normal small buttons
+        'relative z-10 border text-center text-sm py-2 px-3 rounded-[14px]',
         'text-white',
         'bg-gradient-to-b from-background/90 to-muted/90 border-border/40',
         'dark:from-background dark:to-muted dark:border-border'

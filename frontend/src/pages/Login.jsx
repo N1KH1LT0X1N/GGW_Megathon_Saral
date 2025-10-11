@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FiUser, FiArrowRight } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '../components/common/LoadingSpinner';
-import ThemeToggle from '../components/common/ThemeToggle';
+// ThemeToggle removed per request
 
 const Login = () => {
   const { loginWithGoogle } = useAuth();

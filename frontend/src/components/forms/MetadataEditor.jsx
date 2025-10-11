@@ -6,6 +6,7 @@ import { useApi } from '../../hooks/useApi';
 import { apiService } from '../../services/api';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '../common/LoadingSpinner';
+import StarBorder from '../../components/ui/star-border';
 
 const MetadataField = ({ label, value, onChange, placeholder, required = false, multiline = false }) => (
   <div className="space-y-2">
@@ -243,38 +244,28 @@ const MetadataEditor = () => {
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
-          <button
-            onClick={handleSave}
-            disabled={!canSave}
-            className="flex-1 flex items-center justify-center gap-2 px-6 py-3
-                       rounded-md bg-gray-900 hover:bg-gray-800 disabled:bg-gray-400
-                       text-white font-medium transition-colors duration-150
-                       disabled:cursor-not-allowed"
-          >
-            {loading ? (
-              <>
-                <LoadingSpinner size="sm" />
-                Saving…
-              </>
-            ) : (
-              <>
-                <FiSave className="w-4 h-4" />
-                Save Changes
-              </>
-            )}
-          </button>
+          <StarBorder as="button" onClick={handleSave} className="flex-1 inline-block" disabled={!canSave}>
+            <div className={`flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-transparent text-white font-medium ${loading ? 'opacity-60 pointer-events-none' : ''}`}>
+              {loading ? (
+                <>
+                  <LoadingSpinner size="sm" />
+                  Saving…
+                </>
+              ) : (
+                <>
+                  <FiSave className="w-4 h-4" />
+                  Save Changes
+                </>
+              )}
+            </div>
+          </StarBorder>
 
-          <button
-            onClick={handleContinue}
-            disabled={!canContinue}
-            className="flex-1 flex items-center justify-center gap-2 px-6 py-3
-                       rounded-md bg-gray-900 hover:bg-gray-800 disabled:bg-gray-400
-                       text-white font-medium transition-colors duration-150
-                       disabled:cursor-not-allowed"
-          >
-            <FiCheck className="w-4 h-4" />
-            Continue to Scripts
-          </button>
+          <StarBorder as="button" onClick={handleContinue} className="flex-1 inline-block" disabled={!canContinue}>
+            <div className="flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-transparent text-white font-medium">
+              <FiCheck className="w-4 h-4" />
+              Continue to Scripts
+            </div>
+          </StarBorder>
         </div>
       </motion.div>
 
