@@ -19,18 +19,18 @@ const SidebarLink = ({ to, icon: Icon, label, step, currentStep, completedSteps,
       onClick={onClick}
       className={`group flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-150 ${
         isActive && isAccessible
-        ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+        ? 'bg-white/5 text-white'
         : isAccessible
-        ? 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
-        : 'text-gray-400 dark:text-gray-600 cursor-not-allowed'
+        ? 'text-white/80 hover:bg-white/5 hover:text-white'
+        : 'text-white/40 cursor-not-allowed'
       }`}
     >
       <div className={`flex items-center justify-center w-6 h-6 rounded-md transition-colors duration-150 ${
         isCompleted
-        ? 'bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400'
+        ? 'bg-green-900/30 text-green-400'
         : isCurrent
-        ? 'bg-gray-100 dark:bg-gray-900/20 text-gray-600 dark:text-gray-400'
-        : 'text-current'
+        ? 'bg-white/5 text-white'
+        : 'text-white/80'
       }`}>
       {isCompleted ? (
         <FiCheck className="w-4 h-4" />
@@ -80,18 +80,18 @@ const Sidebar = ({ isOpen, onClose }) => {
   const progressPercentage = completedSteps.length > 0 ? Math.round((completedSteps.length / 6) * 100) : 0;
 
   return (
-    <aside className="h-full w-full bg-white dark:bg-neutral-800 border-r border-neutral-200 dark:border-neutral-700 flex flex-col">
+    <aside className="h-full w-full bg-gradient-to-b from-slate-900 via-black to-slate-800 text-white border-r border-transparent flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-200 dark:border-neutral-700">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-transparent">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-gray-900 dark:bg-white rounded-lg flex items-center justify-center">
-            <span className="text-white dark:text-gray-900 font-bold text-sm">SA</span>
+          <div className="w-8 h-8 bg-neutral-800/60 rounded-lg flex items-center justify-center">
+            <span className="text-white font-bold text-sm">SA</span>
           </div>
           <div>
-            <h2 className="font-semibold text-gray-900 dark:text-white">
+            <h2 className="font-semibold text-white">
               Saral AI
             </h2>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-white/70">
               Paper to Video
             </p>
           </div>
@@ -100,7 +100,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         {isMobile && (
           <button
             onClick={onClose}
-            className="p-2 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150"
+            className="p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/5 transition-colors duration-150"
           >
             <FiX className="w-5 h-5" />
           </button>
@@ -109,7 +109,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
       {/* Navigation */}
       <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
-        <div className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4 px-3">
+        <div className="text-xs font-medium text-white/70 uppercase tracking-wider mb-4 px-3">
           Workflow
         </div>
         
@@ -130,24 +130,24 @@ const Sidebar = ({ isOpen, onClose }) => {
 
       {/* Progress */}
       <div className="px-4 py-4 border-t border-neutral-200 dark:border-neutral-700">
-        <div className="px-3 py-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+        <div className="px-3 py-3 bg-white/5 rounded-lg">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <span className="text-sm font-medium text-white">
               Progress
             </span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">
+            <span className="text-sm text-white/70">
               {progressPercentage}%
             </span>
           </div>
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+          <div className="w-full bg-neutral-900/30 rounded-full h-1.5">
             <motion.div
-              className="bg-gray-400 h-1.5 rounded-full"
+              className="bg-indigo-600/80 h-1.5 rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${progressPercentage}%` }}
               transition={{ duration: 0.15 }}
             />
           </div>
-          <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+          <div className="mt-2 text-xs text-white/70">
             {completedSteps.length > 0 ? `${completedSteps.length} of 6 completed` : 'Get started'}
           </div>
         </div>

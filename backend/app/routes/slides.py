@@ -36,42 +36,36 @@ async def generate_slides(paper_id: str):
         paper_info = papers_storage[paper_id]
         scripts_info = scripts_storage[paper_id]
         
-        # Create output directory
-        output_dir = f"temp/slides/{paper_id}"
-        Path(output_dir).mkdir(parents=True, exist_ok=True)
-        
-        # Copy theme files to output directory
-        copy_beamer_theme_files(output_dir)
-        
-        # Copy images to output directory
-        copy_paper_images(paper_info.get("image_files", []), output_dir)
-        
         # Get image assignments
         image_assignments = {}
         for section_name, section_data in scripts_info.get("sections", {}).items():
             if section_data.get("assigned_image"):
                 image_assignments[section_name] = section_data["assigned_image"]
         
-        # Create Beamer presentation with bullet points
+        # Create Beamer presentation with bullet points (this writes a .tex file)
         latex_file = create_beamer_presentation(
             paper_id,
             scripts_info,
             paper_info["metadata"],
             image_assignments
         )
-        
-        # Copy LaTeX file to output directory
-        output_latex = os.path.join(output_dir, f"{paper_id}_presentation.tex")
-        shutil.copy2(latex_file, output_latex)
-        
-        # Compile LaTeX to PDF
-        pdf_path = compile_latex(output_latex, output_dir)
+        # Use the directory where the .tex was generated as the LaTeX working directory
+        latex_dir = os.path.dirname(latex_file)
+
+        # Ensure theme files and images are available relative to the .tex file
+        copy_beamer_theme_files(latex_dir)
+        copy_paper_images(paper_info.get("image_files", []), latex_dir)
+
+        # Compile LaTeX to PDF in the same directory as the .tex
+        pdf_path = compile_latex(latex_file, latex_dir)
         
         if not pdf_path:
             raise Exception("Failed to compile LaTeX to PDF")
         
-        # Convert PDF to images
-        image_paths = convert_pdf_to_images(pdf_path, output_dir, dpi=300)
+        # Convert PDF to images in a clean slides output directory
+        slides_output_dir = f"temp/slides/{paper_id}"
+        Path(slides_output_dir).mkdir(parents=True, exist_ok=True)
+        image_paths = convert_pdf_to_images(pdf_path, slides_output_dir, dpi=300)
         
         if not image_paths:
             raise Exception("Failed to convert PDF to images")
@@ -80,8 +74,8 @@ async def generate_slides(paper_id: str):
         slides_storage[paper_id] = {
             "pdf_path": pdf_path,
             "image_paths": image_paths,
-            "latex_path": output_latex,
-            "output_dir": output_dir,
+            "latex_path": latex_file,
+            "output_dir": slides_output_dir,
             "status": "generated"
         }
         

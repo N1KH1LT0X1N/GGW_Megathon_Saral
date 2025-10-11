@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from 'framer-motion';
 import { FiLinkedin, FiMail, FiArrowLeft } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
-import ThemeToggle from '../components/common/ThemeToggle';
+// ThemeToggle removed per request
 import sai_ganesh from "../images/sai-ganesh.jpg";
 import rahul_sundar from "../images/rahul-sundar.jpg";
 import pk from "../images/pk.jpg";
@@ -153,7 +153,7 @@ export default function About() {
               </span>
             </div>
             
-            <ThemeToggle />
+            {/* ThemeToggle removed per request */}
           </div>
         </div>
       </header>

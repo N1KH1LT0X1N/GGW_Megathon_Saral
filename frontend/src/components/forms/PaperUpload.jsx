@@ -6,25 +6,29 @@ import toast from 'react-hot-toast';
 import { apiService } from '../../services/api';
 import { useWorkflow } from '../../contexts/WorkflowContext';
 import LoadingSpinner from '../common/LoadingSpinner';
+import StarBorder from '../../components/ui/star-border';
 
-const UploadTypeCard = ({ type, currentType, onSelect, icon: Icon, title, description, isActive }) => (
-  <motion.button
-    whileHover={{ scale: 1.02 }}
-    whileTap={{ scale: 0.98 }}
-    onClick={() => onSelect(type)}
-    className={`w-full p-6 rounded-xl border transition-all duration-150 text-left ${
-      isActive
-      ? 'border-gray-700 bg-gray-50 dark:bg-gray-900/50'
-      : 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 bg-white dark:bg-gray-800'
-    }`}
-  >
-    <Icon className={`w-6 h-6 mb-3 ${
-      isActive ? 'text-gray-700 dark:text-gray-300' : 'text-gray-600 dark:text-gray-400'
-    }`} />
-    <h3 className="font-semibold text-gray-900 dark:text-white mb-1">{title}</h3>
-    <p className="text-sm text-gray-600 dark:text-gray-400">{description}</p>
-  </motion.button>
+const UploadTypeCard = ({ type, currentType, onSelect, icon: Icon, title, description, isActive }) => {
+  // Standardized tile color (dark-blue) for both active and inactive states.
+  const baseBg = 'bg-[rgb(28,41,54)] dark:bg-[rgb(32,48,64)]';
+  const baseBorder = 'border-[rgba(255,255,255,0.06)]';
+  const iconColor = 'text-slate-200';
+  const titleColor = 'text-white';
+  const descColor = 'text-slate-300';
+
+  return (
+    <motion.button
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={() => onSelect(type)}
+      className={`w-full p-6 rounded-xl ${baseBg} ${baseBorder} transition-all duration-150 text-left`}
+    >
+      <Icon className={`w-6 h-6 mb-3 ${iconColor}`} />
+      <h3 className={`font-semibold ${titleColor} mb-1`}>{title}</h3>
+      <p className={`text-sm ${descColor}`}>{description}</p>
+    </motion.button>
   );
+};
 
 const FileDisplay = ({ file, onRemove }) => (
   <motion.div
@@ -280,26 +284,22 @@ const PaperUpload = () => {
                   )}
             </AnimatePresence>
 
-              {/* Upload Button */}
-            <button
-              onClick={handleFileUpload}
-              disabled={!uploadedFile || processing}
-              className="w-full flex items-center justify-center gap-2 px-6 py-3
-                         rounded-md bg-gray-900 hover:bg-gray-800 disabled:bg-gray-400
-                         text-white font-medium transition-colors duration-150"
-            >
-              {processing ? (
-                <>
-                <LoadingSpinner size="sm" />
-                Processing {uploadType === 'file' ? 'LaTeX' : 'PDF'}...
-                </>
-                ) : (
-                <>
-                <FiCheck className="w-5 h-5" />
-                Process {uploadType === 'file' ? 'LaTeX' : 'PDF'} File
-                </>
-                )}
-              </button>
+              {/* Upload Button - use landing page StarBorder */}
+              <StarBorder as="button" onClick={handleFileUpload} className="w-full inline-block" disabled={!uploadedFile || processing}>
+                <div className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-transparent text-white font-medium ${processing ? 'opacity-60 pointer-events-none' : ''}`}>
+                  {processing ? (
+                    <>
+                      <LoadingSpinner size="sm" />
+                      Processing {uploadType === 'file' ? 'LaTeX' : 'PDF'}...
+                    </>
+                  ) : (
+                    <>
+                      <FiCheck className="w-5 h-5" />
+                      Process {uploadType === 'file' ? 'LaTeX' : 'PDF'} File
+                    </>
+                  )}
+                </div>
+              </StarBorder>
             </motion.div>
             )}
 
@@ -331,25 +331,21 @@ const PaperUpload = () => {
                 </p>
               </div>
 
-              <button
-                onClick={handleArxivSubmit}
-                disabled={!arxivUrl.trim() || processing}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3
-                           rounded-md bg-gray-900 hover:bg-gray-800 disabled:bg-gray-400
-                           text-white font-medium transition-colors duration-150"
-              >
-                {processing ? (
-                  <>
-                  <LoadingSpinner size="sm" />
-                  Importing from arXiv...
-                  </>
+              <StarBorder as="button" onClick={handleArxivSubmit} className="w-full inline-block" disabled={!arxivUrl.trim() || processing}>
+                <div className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-transparent text-white font-medium ${processing ? 'opacity-60 pointer-events-none' : ''}`}>
+                  {processing ? (
+                    <>
+                      <LoadingSpinner size="sm" />
+                      Importing from arXiv...
+                    </>
                   ) : (
-                  <>
-                  <FiGlobe className="w-5 h-5" />
-                  Import from arXiv
-                  </>
+                    <>
+                      <FiGlobe className="w-5 h-5" />
+                      Import from arXiv
+                    </>
                   )}
-                </button>
+                </div>
+              </StarBorder>
               </motion.div>
               )}
         </AnimatePresence>
