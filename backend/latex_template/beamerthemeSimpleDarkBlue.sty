@@ -1,0 +1,22 @@
+% Beamer theme Simple Dark Blue
+\ProvidesPackage{beamerthemeSimpleDarkBlue}
+
+\RequirePackage{beamercolorthemeSimpleDarkBlue}
+\RequirePackage{beamerfontthemeSimpleDarkBlue}
+\RequirePackage{beamerinnerthemeSimpleDarkBlue}
+
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamertemplate{frametitle}{%
+  \vspace{0.5cm}%
+  \insertframetitle%
+}
+
+\setbeamertemplate{footline}{%
+  \hbox{%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1ex,leftskip=1em,rightskip=1em]{footline}%
+      \usebeamerfont{footline}%
+      \hfill\insertframenumber{} / \inserttotalframenumber
+    \end{beamercolorbox}%
+  }%
+}

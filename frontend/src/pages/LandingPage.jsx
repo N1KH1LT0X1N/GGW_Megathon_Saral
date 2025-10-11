@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiArrowRight, FiFileText, FiMic, FiVideo, FiZap, FiCheck } from 'react-icons/fi';
+import { FiArrowRight, FiFileText, FiMic, FiVideo, FiZap, FiCheck, FiHeadphones } from 'react-icons/fi';
 import StarBorder from '../components/ui/star-border';
 import { GlowCard } from '../components/ui/spotlight-card';
 // ThemeToggle removed from this page per request

@@ -43,8 +43,11 @@ export const AuthProvider = ({ children }) => {
       const response = await api.get('/auth/verify');
       setUser(response.data.user);
     } catch (error) {
-      console.error('Token verification failed:', error);
-      logout();
+      console.warn('Token verification failed, clearing auth:', error.message);
+      // Clear invalid token silently
+      setToken(null);
+      setUser(null);
+      localStorage.removeItem('auth_token');
     } finally {
       setLoading(false);
     }

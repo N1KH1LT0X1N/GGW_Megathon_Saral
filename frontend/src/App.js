@@ -18,7 +18,8 @@ import SlideCreation from './pages/SlideCreation';
 import MediaGeneration from './pages/MediaGeneration';
 import Results from './pages/Results';
 import About from './pages/About';
-import VideosPage from './pages/VideosPage'
+import VideosPage from './pages/VideosPage';
+import PodcastGeneration from './pages/PodcastGeneration';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
     <Route path="/" element={<LandingPage />} />
     <Route path="/about" element={<About />} />
     <Route path="/sample" element={<VideosPage/>} />
+    <Route path="/podcast" element={<PodcastGeneration />} />
     <Route path="/api-setup" element={
       <ProtectedRoute>
       <ApiSetup />
