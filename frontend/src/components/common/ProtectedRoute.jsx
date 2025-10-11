@@ -3,8 +3,16 @@ import { useAuth } from '../../contexts/AuthContext';
 import LoadingSpinner from './LoadingSpinner';
 import Login from '../../pages/Login';
 
+// Development mode: set to false to require authentication
+const DEV_MODE_BYPASS_AUTH = true;
+
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
+
+  // In dev mode, bypass authentication
+  if (DEV_MODE_BYPASS_AUTH) {
+    return children;
+  }
 
   if (loading) {
     return (

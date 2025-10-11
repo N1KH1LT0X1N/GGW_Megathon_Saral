@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiArrowRight, FiFileText, FiMic, FiVideo, FiZap, FiCheck } from 'react-icons/fi';
+import { FiArrowRight, FiFileText, FiMic, FiVideo, FiZap, FiCheck, FiHeadphones } from 'react-icons/fi';
 import ThemeToggle from '../components/common/ThemeToggle';
 
 const FeatureCard = ({ icon: Icon, title, description, delay = 0 }) => (
@@ -120,12 +120,19 @@ const LandingPage = () => {
           Saral AI seamlessly transforms your research papers into professional video presentations, utilizing AI-powered scripts, customized slides, and natural voice narration.
         </p>
 
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             to="/api-setup"
             className="btn-primary flex items-center gap-2"
           >
             Get Started <FiArrowRight className="w-4 h-4" />
+          </Link>
+
+          <Link
+            to="/podcast"
+            className="btn-secondary flex items-center gap-2"
+          >
+            <FiHeadphones className="w-4 h-4" /> Generate Podcast
           </Link>
 
           <Link
