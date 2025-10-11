@@ -1,0 +1,31 @@
+fastapi==0.115.4
+uvicorn[standard]==0.30.6
+
+# Core utilities
+aiofiles>=23.2.1
+python-multipart>=0.0.9
+requests>=2.31.0
+python-dotenv>=1.0.1
+
+# Google Generative AI and auth
+google-generativeai>=0.8.3
+google-auth>=2.34.0
+
+# HTML parsing
+beautifulsoup4>=4.12.3
+
+# PDF and image processing
+Pillow>=10.4.0
+pdf2image>=1.17.0
+PyMuPDF>=1.24.10
+
+# Video creation
+moviepy==1.0.3
+imageio-ffmpeg>=0.4.9
+
+# Text utilities
+grapheme>=0.6.0
+
+# Data validation
+pydantic==2.11.7
+PyJWT>=2.8.0
