@@ -25,6 +25,7 @@ podcast_storage = {}
 class PodcastRequest(BaseModel):
     num_exchanges: Optional[int] = 8
     language: Optional[str] = "en"
+    complexity_level: Optional[str] = "medium"  # 'easy', 'medium', 'advanced'
 
 class PodcastResponse(BaseModel):
     paper_id: str
@@ -76,7 +77,8 @@ async def generate_podcast_script(paper_id: str, request: PodcastRequest):
                 paper_content=paper_content,
                 metadata=metadata,
                 num_exchanges=request.num_exchanges,
-                language=request.language
+                language=request.language,
+                complexity_level=request.complexity_level
             )
         except Exception as gen_error:
             error_detail = f"Podcast generation error: {str(gen_error)}"

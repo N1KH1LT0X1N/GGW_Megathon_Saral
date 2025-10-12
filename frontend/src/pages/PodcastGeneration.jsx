@@ -5,9 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import api from '../services/api';
 import ThemeToggle from '../components/common/ThemeToggle';
+import ComplexityButton from '../components/common/ComplexityButton';
+import { useComplexity } from '../contexts/ComplexityContext';
 
 const PodcastGeneration = () => {
   const navigate = useNavigate();
+  const { complexity } = useComplexity();
   const [inputType, setInputType] = useState('arxiv'); // arxiv, pdf, latex
   const [arxivUrl, setArxivUrl] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
@@ -44,7 +47,8 @@ const PodcastGeneration = () => {
       toast.loading('Creating podcast dialogue...');
       const podcastResponse = await api.post(`/podcast/${newPaperId}/generate-script`, {
         num_exchanges: 8,
-        language: selectedLanguage
+        language: selectedLanguage,
+        complexity_level: complexity
       });
       
       const generatedDialogue = podcastResponse.data.dialogue;
@@ -237,6 +241,7 @@ const PodcastGeneration = () => {
             </div>
             
             <div className="flex items-center gap-4">
+              <ComplexityButton />
               <ThemeToggle />
               <button onClick={() => navigate('/')} className="btn-secondary">
                 Back to Home

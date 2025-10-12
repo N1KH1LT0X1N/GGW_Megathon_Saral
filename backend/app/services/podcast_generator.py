@@ -28,7 +28,8 @@ class PodcastGenerator:
         paper_content: str, 
         metadata: Dict,
         num_exchanges: int = 10,
-        language: str = "en"
+        language: str = "en",
+        complexity_level: str = "medium"
     ) -> List[Dict[str, str]]:
         """
         Generate a student-teacher podcast dialogue
@@ -38,6 +39,7 @@ class PodcastGenerator:
             metadata: Paper metadata (title, authors, etc.)
             num_exchanges: Number of question-answer exchanges
             language: Language code (en=English, hi=Hindi, ta=Tamil, etc.)
+            complexity_level: Complexity level ('easy', 'medium', 'advanced')
         
         Returns:
             List of dialogue segments with speaker and text
@@ -63,7 +65,36 @@ class PodcastGenerator:
         
         language_instruction = f"\n**IMPORTANT: Generate the ENTIRE dialogue in {lang_name} language only.**\n" if language != "en" else ""
         
+        # Complexity level instructions
+        complexity_instructions = {
+            'easy': """
+**COMPLEXITY LEVEL: BEGINNER FRIENDLY**
+- Use simple, everyday language
+- Avoid technical jargon - explain any necessary terms in simple words
+- Use analogies and real-world examples
+- Student asks basic, fundamental questions
+- Teacher explains like talking to a curious high school student
+- Focus on core concepts and big picture ideas""",
+            'medium': """
+**COMPLEXITY LEVEL: INTERMEDIATE**
+- Balance accessible explanations with some technical terminology
+- Explain technical terms but assume basic familiarity
+- Student asks informed questions showing some background knowledge
+- Teacher provides moderate depth without oversimplifying
+- Suitable for undergraduate students or educated professionals""",
+            'advanced': """
+**COMPLEXITY LEVEL: EXPERT**
+- Use full technical and academic terminology
+- Student asks sophisticated, probing questions
+- Teacher discusses methodology, implications, and nuances in depth
+- Assume domain expertise and research background
+- Suitable for graduate students, researchers, and domain experts"""
+        }
+        
+        complexity_instruction = complexity_instructions.get(complexity_level, complexity_instructions['medium'])
+        
         prompt = f"""You are creating an engaging educational podcast script about a research paper.{language_instruction}
+{complexity_instruction}
 
 Paper Title: {title}
 

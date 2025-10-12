@@ -21,6 +21,7 @@ import ChromeTabs from '../components/common/Pagination'; // Chrome-style tab ba
 // import landing-style Button and Box (GlowCard) components
 import Button from '../components/ui/star-border';
 import Box from '../components/ui/spotlight-card';
+import { useComplexity } from '../contexts/ComplexityContext';
 
 import { apiService } from '../services/api';
 import { useApi } from '../hooks/useApi';
@@ -292,6 +293,7 @@ const ScriptGeneration = () => {
   } = useWorkflow();
 
   const { loading: apiLoading, execute } = useApi();
+  const { complexity } = useComplexity();
 
   const [generating, setGenerating] = useState(false);
   const [savingScripts, setSavingScripts] = useState(false);
@@ -366,17 +368,17 @@ const ScriptGeneration = () => {
       toast.error('Upload a paper first');
       return;
     }
-    setGenerating(true);
     
+    setGenerating(true);
     try {
       console.log('Generating scripts for paperId:', paperId);
       
-      // Generate scripts
-      await apiService.generateScript(paperId);
+      // Generate scripts with complexity level
+      await apiService.generateScript(paperId, complexity);
       
       // Wait a moment for the backend to save the data
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+    
       // Refresh data from server
       const res = await apiService.getScriptsWithBullets(paperId);
       const sectionsData = res.data.sections || {};

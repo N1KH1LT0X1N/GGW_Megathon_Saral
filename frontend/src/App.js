@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { WorkflowProvider } from './contexts/WorkflowContext';
 import { ApiProvider } from './contexts/ApiContext';
+import { ComplexityProvider } from './contexts/ComplexityContext';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from './contexts/AuthContext';
@@ -20,6 +21,7 @@ import Results from './pages/Results';
 import About from './pages/About';
 import VideosPage from './pages/VideosPage';
 import PodcastGeneration from './pages/PodcastGeneration';
+import MindmapGeneration from './pages/MindmapGeneration';
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
     <Router>
     <ThemeProvider>
     <ApiProvider>
+    <ComplexityProvider>
     <WorkflowProvider>
     <div className="App min-h-screen bg-gray-900 dark:bg-gray-900 transition-colors duration-300">
     <Routes>
@@ -36,6 +39,7 @@ function App() {
     <Route path="/about" element={<About />} />
     <Route path="/sample" element={<VideosPage/>} />
     <Route path="/podcast" element={<PodcastGeneration />} />
+    <Route path="/mindmap" element={<MindmapGeneration />} />
     <Route path="/api-setup" element={
       <ProtectedRoute>
       <ApiSetup />
@@ -99,6 +103,7 @@ function App() {
     />
     </div>
     </WorkflowProvider>
+    </ComplexityProvider>
     </ApiProvider>
     </ThemeProvider>
     </Router>

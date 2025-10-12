@@ -18,6 +18,11 @@ beautifulsoup4>=4.12.3
 Pillow>=10.4.0
 pdf2image>=1.17.0
 PyMuPDF>=1.24.10
+pdfplumber>=0.10.3
+
+# ArXiv integration for mind maps
+arxiv>=2.1.0
+feedparser>=6.0.11
 
 # Video creation
 moviepy==1.0.3
