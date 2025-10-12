@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiDownload, FiLoader, FiAlertCircle, FiGitBranch, FiUpload, FiLink, FiFile } from 'react-icons/fi';
 import Layout from '../components/common/Layout';
+import { useComplexity } from '../contexts/ComplexityContext';
 import toast from 'react-hot-toast';
 import mermaid from 'mermaid';
 
 const MindmapGeneration = () => {
+  const { complexity } = useComplexity();
   const [inputMode, setInputMode] = useState('arxiv'); // 'arxiv', 'pdf', 'latex'
   const [arxivUrl, setArxivUrl] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
@@ -109,7 +111,10 @@ const MindmapGeneration = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ arxiv_url: arxivUrl }),
+          body: JSON.stringify({ 
+            arxiv_url: arxivUrl,
+            complexity_level: complexity
+          }),
         });
 
         if (!response.ok) {
@@ -132,6 +137,7 @@ const MindmapGeneration = () => {
         if (customTitle.trim()) {
           formData.append('title', customTitle);
         }
+        formData.append('complexity_level', complexity);
 
         const response = await fetch(`${API_BASE}/api/mindmap/generate-mindmap-from-file`, {
           method: 'POST',
@@ -497,6 +503,9 @@ const MindmapGeneration = () => {
             </p>
             <p className="text-xs text-blue-700 dark:text-blue-400 mt-2">
               📄 Supported formats: arXiv URLs, PDF files, and LaTeX source files (.tex)
+            </p>
+            <p className="text-xs text-blue-700 dark:text-blue-400 mt-2">
+              🎯 Tip: Adjust content complexity using the button in the navbar (top right)
             </p>
           </motion.div>
         )}

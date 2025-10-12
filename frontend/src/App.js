@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { WorkflowProvider } from './contexts/WorkflowContext';
 import { ApiProvider } from './contexts/ApiContext';
+import { ComplexityProvider } from './contexts/ComplexityContext';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from './contexts/AuthContext';
@@ -30,6 +31,7 @@ function App() {
     <Router>
     <ThemeProvider>
     <ApiProvider>
+    <ComplexityProvider>
     <WorkflowProvider>
     <div className="App min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
     <Routes>
@@ -101,6 +103,7 @@ function App() {
     />
     </div>
     </WorkflowProvider>
+    </ComplexityProvider>
     </ApiProvider>
     </ThemeProvider>
     </Router>

@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
-from typing import Dict, List
+from typing import Dict, List, Optional
+from pydantic import BaseModel
 import os
 import json
 import traceback
@@ -29,6 +30,10 @@ logger = logging.getLogger(__name__)
 
 # Enhanced storage for scripts with bullet points
 scripts_storage = {}
+
+class ScriptGenerationRequest(BaseModel):
+    """Request model for script generation"""
+    complexity_level: Optional[str] = "medium"  # 'easy', 'medium', 'advanced'
 
 def ensure_scripts_directory():
     """Ensure scripts directory exists"""
@@ -81,7 +86,11 @@ def get_or_load_scripts(paper_id: str) -> Dict:
     return scripts_storage[paper_id]
 
 @router.post("/{paper_id}/generate", response_model=ScriptResponse)
-async def generate_script(paper_id: str, api_keys: dict = Depends(get_api_keys)):
+async def generate_script(
+    paper_id: str, 
+    request: ScriptGenerationRequest = ScriptGenerationRequest(),
+    api_keys: dict = Depends(get_api_keys)
+):
     """Generate presentation script from paper with bullet points."""
     paper_id_str = str(paper_id)  # Ensure we're using a string for comparison
     
@@ -126,8 +135,12 @@ async def generate_script(paper_id: str, api_keys: dict = Depends(get_api_keys))
         input_text = extract_text_from_file(file_path)
         input_text = clean_text(input_text)
         
-        # Generate full script using Gemini with improved prompts
-        full_script = generate_full_script_with_gemini(api_keys["gemini_key"], input_text)
+        # Generate full script using Gemini with improved prompts and complexity level
+        full_script = generate_full_script_with_gemini(
+            api_keys["gemini_key"], 
+            input_text,
+            complexity_level=request.complexity_level
+        )
         
         # Split into sections
         sections_scripts = split_script_into_sections(full_script)

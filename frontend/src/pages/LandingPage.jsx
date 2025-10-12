@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FiArrowRight, FiFileText, FiMic, FiVideo, FiZap, FiCheck, FiHeadphones, FiGitBranch } from 'react-icons/fi';
 import StarBorder from '../components/ui/star-border';
 import { GlowCard } from '../components/ui/spotlight-card';
+import ComplexityButton from '../components/common/ComplexityButton';
 // ThemeToggle removed from this page per request
 
 const FeatureCard = ({ icon: Icon, title, description, delay = 0 }) => (
@@ -184,6 +185,7 @@ const LandingPage = () => {
               <StarBorder as={Link} to="/about" className="inline-block">
                 <div className="text-sm font-medium text-white">About</div>
               </StarBorder>
+              <ComplexityButton />
         </div>
       </div>
     </div>

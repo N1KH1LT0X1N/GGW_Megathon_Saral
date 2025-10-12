@@ -62,17 +62,32 @@ class GeminiMindmapProcessor:
         if self.model is None:
             raise Exception("No compatible Gemini model found. Please check your API key and model availability.")
     
-    def create_analysis_prompt(self, paper_title: str, paper_text: str) -> str:
+    def create_analysis_prompt(self, paper_title: str, paper_text: str, complexity_level: str = "medium") -> str:
         """
         Create a comprehensive prompt for Gemini to analyze the research paper.
         
         Args:
             paper_title: Title of the research paper
             paper_text: Full text content of the paper
+            complexity_level: Level of complexity ('easy', 'medium', 'advanced')
             
         Returns:
             Formatted prompt string
         """
+        # Define complexity modifiers
+        complexity_instructions = {
+            'easy': """
+Use simple, accessible language. Avoid jargon. Explain concepts in terms that a general audience or students can understand.
+Key points should be beginner-friendly terms, not technical jargon.""",
+            'medium': """
+Balance technical terminology with clear explanations. Use moderate technical depth suitable for educated audiences.
+Key points can include common technical terms that are well-explained.""",
+            'advanced': """
+Use full academic and technical terminology. Provide in-depth analysis suitable for domain experts and researchers.
+Key points should be precise technical terms and advanced concepts."""
+        }
+        
+        complexity_instruction = complexity_instructions.get(complexity_level, complexity_instructions['medium'])
         prompt = f"""
 You are an expert research analyst. Please analyze the following research paper and create a structured mind map outline.
 
@@ -83,6 +98,9 @@ Paper Content:
 
 Please analyze this research paper and create a structured mind map with the following requirements:
 
+COMPLEXITY LEVEL: {complexity_level.upper()}
+{complexity_instruction}
+
 1. Divide the content into exactly 4 main sections:
    - Introduction
    - Methodology  
@@ -92,7 +110,7 @@ Please analyze this research paper and create a structured mind map with the fol
 2. For each section, identify 3-5 key points that capture the most important information
 3. Each key point must be a SINGLE KEYWORD or SHORT PHRASE (2-4 words maximum)
 4. Focus on the most significant concepts, methods, and findings
-5. Use technical terms that are essential to understanding the paper
+5. Adjust terminology based on the complexity level specified above
 6. Keep it simple and clean - no sentences, just keywords
 
 Return your analysis as a JSON object with this exact structure:
@@ -139,21 +157,23 @@ CRITICAL REQUIREMENTS:
 """
         return prompt
     
-    def analyze_paper(self, paper_data: Dict) -> Dict:
+    def analyze_paper(self, paper_data: Dict, complexity_level: str = "medium") -> Dict:
         """
         Analyze research paper using Gemini API.
         
         Args:
             paper_data: Dictionary containing paper metadata and full text
+            complexity_level: Level of complexity ('easy', 'medium', 'advanced')
             
         Returns:
             Structured analysis data
         """
         try:
-            # Create analysis prompt
+            # Create analysis prompt with complexity level
             prompt = self.create_analysis_prompt(
                 paper_data['metadata']['title'],
-                paper_data['full_text']
+                paper_data['full_text'],
+                complexity_level
             )
             
             # Generate response from Gemini

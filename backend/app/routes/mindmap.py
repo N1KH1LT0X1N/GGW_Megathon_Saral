@@ -33,11 +33,13 @@ mermaid_generator = MermaidGenerator()
 class MindmapRequest(BaseModel):
     """Request model for mindmap generation"""
     arxiv_url: str
+    complexity_level: Optional[str] = "medium"  # 'easy', 'medium', 'advanced'
 
     class Config:
         json_schema_extra = {
             "example": {
-                "arxiv_url": "https://arxiv.org/abs/2301.00001"
+                "arxiv_url": "https://arxiv.org/abs/2301.00001",
+                "complexity_level": "medium"
             }
         }
 
@@ -114,9 +116,9 @@ async def generate_mindmap(request: MindmapRequest):
         logger.info(f"Fetching paper from: {arxiv_url}")
         paper_data = arxiv_fetcher.fetch_paper_content(arxiv_url)
         
-        # Step 2: Analyze paper with Gemini
-        logger.info(f"Analyzing paper: {paper_data['metadata']['title']}")
-        analysis_data = gemini_processor.analyze_paper(paper_data)
+        # Step 2: Analyze paper with Gemini (with complexity level)
+        logger.info(f"Analyzing paper: {paper_data['metadata']['title']} with complexity: {request.complexity_level}")
+        analysis_data = gemini_processor.analyze_paper(paper_data, complexity_level=request.complexity_level)
         
         # Step 3: Generate Mermaid mind map
         logger.info("Generating Mermaid mind map")
@@ -317,7 +319,8 @@ def extract_metadata_from_latex(latex_content: str) -> Dict:
 @router.post("/generate-mindmap-from-file")
 async def generate_mindmap_from_file(
     file: UploadFile = File(...),
-    title: Optional[str] = Form(None)
+    title: Optional[str] = Form(None),
+    complexity_level: Optional[str] = Form("medium")
 ):
     """
     Generate a mind map from an uploaded PDF or LaTeX file.
@@ -325,6 +328,7 @@ async def generate_mindmap_from_file(
     Args:
         file: Uploaded PDF or LaTeX file
         title: Optional custom title
+        complexity_level: Complexity level ('easy', 'medium', 'advanced')
         
     Returns:
         MindmapResponse with the generated Mermaid diagram and metadata
@@ -369,9 +373,9 @@ async def generate_mindmap_from_file(
             "arxiv_id": "uploaded-file"
         }
         
-        # Step 1: Analyze paper with Gemini
-        logger.info(f"Analyzing paper: {metadata['title']}")
-        analysis_data = gemini_processor.analyze_paper(paper_data)
+        # Step 1: Analyze paper with Gemini (with complexity level)
+        logger.info(f"Analyzing paper: {metadata['title']} with complexity: {complexity_level}")
+        analysis_data = gemini_processor.analyze_paper(paper_data, complexity_level=complexity_level)
         
         # Step 2: Generate Mermaid mind map
         logger.info("Generating Mermaid mind map")

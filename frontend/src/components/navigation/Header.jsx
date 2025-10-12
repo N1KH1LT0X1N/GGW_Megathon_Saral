@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
-// ThemeToggle removed per request
+import ComplexityButton from '../common/ComplexityButton';
 import { useWorkflow } from '../../contexts/WorkflowContext';
 import { useResponsive } from '../../hooks/useResponsive';
 import { useNavigate } from 'react-router-dom';
@@ -105,7 +105,8 @@ const Header = ({ onMenuClick, sidebarOpen }) => {
               </div>
               )}
 
-            {/* ThemeToggle removed per request */}
+            {/* Complexity Level Button */}
+            <ComplexityButton />
           </div>
         </div>
       </div>
