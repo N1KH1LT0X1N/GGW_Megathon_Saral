@@ -506,7 +506,7 @@ const LandingPage = () => {
 
       {/* WhatsApp Floating Button */}
       <a
-        href="https://wa.me/14155238886?text=join%20fallen-basket"
+        href="https://wa.me/14155238886?text=join%20pocket-afternoon"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 z-50 group"
