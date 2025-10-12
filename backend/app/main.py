@@ -22,14 +22,14 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-from app.routes import api_keys, papers, scripts, slides, media, images, auth, podcast, mindmap
+from app.routes import api_keys, papers, scripts, slides, media, images, auth, podcast, mindmap, visual_storytelling
 from app.auth.dependencies import get_current_user, get_current_user_optional
 
 # Create temp directories
 temp_dirs = [
     "temp/arxiv_sources", "temp/images", "temp/title_slides",
     "temp/videos", "temp/audio", "temp/latex_template",
-    "temp/slides", "temp/scripts", "temp/podcasts"
+    "temp/slides", "temp/scripts", "temp/podcasts", "temp/visual_storytelling"
 ]
 
 for dir_path in temp_dirs:
@@ -110,6 +110,7 @@ app.include_router(media.router, prefix="/api/media", tags=["Media"])
 app.include_router(images.router, prefix="/api/images", tags=["Images"])
 app.include_router(podcast.router, prefix="/api/podcast", tags=["Podcast"])
 app.include_router(mindmap.router, prefix="/api/mindmap", tags=["Mindmap"])
+app.include_router(visual_storytelling.router, prefix="/api/visual-storytelling", tags=["Visual Storytelling"])
 
 # Public endpoints
 @app.get("/")

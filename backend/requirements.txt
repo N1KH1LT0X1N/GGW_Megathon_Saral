@@ -34,3 +34,7 @@ grapheme>=0.6.0
 # Data validation
 pydantic==2.11.7
 PyJWT>=2.8.0
+
+# AI Image Generation (optional for visual storytelling)
+# stability-sdk>=0.8.4  # Uncomment if using Stability AI
+# openai>=1.0.0  # Uncomment if using DALL-E for image generation

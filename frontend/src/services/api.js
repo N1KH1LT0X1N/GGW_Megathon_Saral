@@ -9,7 +9,7 @@ const API_CONFIG = {
   baseURL: process.env.NODE_ENV === 'production' 
   ? process.env.REACT_APP_API_URL 
   : 'http://localhost:8000',
-  timeout: 120000,
+  timeout: 300000, // 5 minutes for video generation
   retryAttempts: 2,
   retryDelay: 1000,
 };

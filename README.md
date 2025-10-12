@@ -1,337 +1,249 @@
-# SARAL: Simplified And Automated Research Amplification and Learning
+# 🎓 SARAL AI - Research Democratization Platform
 
-SARAL AI is a full-stack application that automates the process of converting research papers (LaTeX or arXiv) into engaging educational videos. The system leverages AI for script generation, slide creation, audio narration, and video synthesis, providing a seamless workflow from paper upload to downloadable media.
+**Simplified And Automated Research Amplification and Learning**
 
----
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![React](https://img.shields.io/badge/react-18.x-blue.svg)](https://reactjs.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com/)
 
-## Table of Contents
+Transform research papers into educational videos, podcasts, mind maps, and visual stories using AI.
 
-- [Overview](#overview)
-- [Features](#features)
-- [Tutorial](#tutorial)
-- [System Requirements](#system-requirements)
-- [Project Structure](#project-structure)
-- [Installation](#installation)
-  - [macOS Setup](#macos-setup)
-  - [Ubuntu Setup](#ubuntu-setup)
-  - [Windows Setup](#windows-setup)
-- [Configuration](#configuration)
-- [Running the Application](#running-the-application)
-- [Workflow Guide](#workflow-guide)
-- [Troubleshooting](#troubleshooting)
-- [Development](#development)
-- [API Overview](#api-overview)
-- [Customization](#customization)
-- [License](#license)
-- [Acknowledgements](#acknowledgements)
+**Quick Links:** [Live Demo](https://coming-soon) | [Chrome Extension](#-chrome-extension) | [Contact](mailto:democratise.research@gmail.com) | [WhatsApp Bot](https://wa.me/14155238886?text=join%20fallen-basket)
 
 ---
 
-## Overview
+## 📋 Table of Contents
 
-SARAL AI transforms research papers into professional educational videos through a structured workflow:
-
-1. **API Keys Setup:** Configure required API keys for AI and TTS services.
-2. **Paper Upload:** Submit papers via arXiv links or direct LaTeX uploads.
-3. **Script Generation:** Convert paper content into narration scripts using AI.
-4. **Slides Generation:** Create presentation slides with bullet points and images.
-5. **Video Production:** Generate the final video with narration and visuals.
+- [Overview](#-overview) | [Features](#-key-features) | [Installation](#️-installation) | [Configuration](#-configuration) | [Running](#️-running) | [Chrome Extension](#-chrome-extension) | [Troubleshooting](#-troubleshooting) | [API Docs](#-api-documentation) | [Contributing](#-contributing) | [License](#-license)
 
 ---
 
-## Features
-
-- **Multiple Input Methods:** Upload LaTeX ZIPs or import from arXiv.
-- **AI-Generated Scripts:** Uses Google Gemini API for educational narration.
-- **Interactive Editor:** Edit title, section scripts, and bullet points.
-- **Image Selection:** Assign extracted figures to slides.
-- **Multilingual Support:** Generate videos in English or Hindi (with Hinglish technical terms).
-- **Professional Output:** Download videos, LaTeX sources, and PDF slides.
-- **Modern UI:** Responsive React frontend with dark mode.
-
----
-
-## Tutorial
-
-For a comprehensive step-by-step guide on using SARAL AI, please refer to our detailed tutorial document:
-
-📖 **[Download Tutorial PDF](tutorial.pdf)**
-
-The tutorial covers:
-- Complete setup and installation process
-- Detailed workflow walkthrough with screenshots
-- Best practices for optimal results
-- Advanced configuration options
-
----
-
-## System Requirements
-
-### Backend
-
-- Python 3.9+
-- pdflatex/texlive
-- poppler-utils
-- FFmpeg
-- 4GB+ RAM
-- 2GB+ disk space
-
-### Frontend
-
-- Node.js 16+
-- npm 8+ or yarn 1.22+
-- Modern web browser
-
----
-
-## Project Structure
+## ✨ Overview
 
 ```
-.
-├── .gitignore
-├── LICENSE
-├── README.md
-├── backend/
-│   ├── .env
-│   ├── .python-version
-│   ├── requirements.txt
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   └── utils/
-│   └── temp/
-│       ├── arxiv_sources/
-│       ├── audio/
-│       ├── images/
-│       ├── latex/
-│       ├── latex_template/
-│       ├── papers/
-│       ├── scripts/
-│       ├── slides/
-│       ├── title_slides/
-│       └── videos/
-└── frontend/
-    ├── package.json
-    ├── README.md
-    ├── tailwind.config.js
-    ├── public/
-    │   ├── favicon.ico
-    │   ├── index.html
-    │   ├── logo192.png
-    │   ├── logo512.png
-    │   ├── manifest.json
-    │   └── robots.txt
-    └── src/
-        ├── App.css
-        ├── App.js
-        ├── App.test.js
-        ├── index.css
-        ├── index.js
-        └── ...
+Research Paper → AI Processing → 📹 Video | 🎙️ Podcast | 🗺️ Mindmap | 📖 Story
+🔌 Chrome Extension: Process papers from any website!
+```
+
+**Key Capabilities:**
+- 🎥 Educational videos with AI narration
+- 🎙️ Natural podcast conversations
+- 🗺️ Visual mind maps
+- 📖 Cinematic storytelling videos
+- 🔌 Chrome extension for instant processing
+- 💬 WhatsApp bot support
+- 🌐 Multi-language (English/Hindi/Gujarati)
+
+---
+
+## 🚀 Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **Video Generation** | AI scripts, professional slides, multi-language narration |
+| **Podcast Creation** | Two-voice dialogues, natural conversations |
+| **Mind Mapping** | Hierarchical concept visualization, SVG export |
+| **Visual Stories** | Scene-by-scene narratives with text overlays |
+| **Chrome Extension** | One-click processing from arXiv, Google Scholar |
+| **WhatsApp Bot** | 24/7 research assistance via chat |
+| **Batch Processing** | Handle multiple papers efficiently |
+
+---
+
+## 🎯 Use Cases
+
+**Students:** Exam prep, quick paper understanding, visual learning  
+**Educators:** Lecture content, teaching materials, multi-format resources  
+**Researchers:** Conference presentations, accessible findings, outreach  
+**Institutions:** Content libraries, online courses, research accessibility  
+**Chrome Extension:** Process papers instantly from any research website
+
+📄 **Tutorial:** [Download PDF](tutorial.pdf) for complete setup and usage guide
+
+---
+
+## 📦 System Requirements
+
+**Backend:** Python 3.9+, LaTeX (pdflatex/MiKTeX), Poppler, FFmpeg, 4GB+ RAM  
+**Frontend:** Node.js 16+, npm 8+, Modern browser  
+**API Keys:** Google Gemini (required, free 200 req/day), Sarvam AI (optional, Hindi TTS), Hugging Face (optional, free AI images)
+
+---
+
+## 🏗️ Project Structure
+
+```
+GGW_Megathon_Saral/
+├── chrome-extension/    # Browser extension (manifest.json, popup, content scripts)
+├── backend/            # FastAPI server (routes, services, models)
+│   ├── app/           # Main application (routes/, services/, models/)
+│   └── temp/          # Generated files (papers, videos, podcasts, mindmaps)
+└── frontend/          # React app (pages, components, contexts)
 ```
 
 ---
 
-## Installation
+## ⚙️ Installation
 
-### macOS Setup
+### Prerequisites
+**Windows:** [Python](https://python.org), [Node.js](https://nodejs.org), [MiKTeX](https://miktex.org), [Poppler](https://github.com/oschwartz10612/poppler-windows/releases/), [FFmpeg](https://ffmpeg.org)  
+**macOS:** `brew install python@3.9 node poppler ffmpeg && brew install --cask mactex`  
+**Linux:** `sudo apt install python3.9 nodejs npm poppler-utils ffmpeg texlive-full`
 
-#### Backend
+### Setup
+```bash
+# Clone repository
+git clone https://github.com/yourusername/GGW_Megathon_Saral.git
+cd GGW_Megathon_Saral
 
-```sh
-# Install Homebrew if not installed
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Install dependencies
-brew install python@3.9 poppler ffmpeg texlive
-
-# Clone the repository
-git clone https://github.com/DemocratiseResearch/saral.git
-cd saral/backend
-
-# Create and activate virtual environment
-python3 -m venv .venv
-source .venv/bin/activate
-
-# Install Python dependencies
-pip install -r requirements.txt
-```
-
-#### Frontend
-
-```sh
-cd ../frontend
-npm install
-# or
-yarn install
-```
-
----
-
-### Ubuntu Setup
-
-#### Backend
-
-```sh
-sudo apt update
-sudo apt install -y python3.9 python3.9-venv python3-pip poppler-utils ffmpeg texlive-full
-
-git clone https://github.com/DemocratiseResearch/saral.git
-cd saral/backend
-
-python3.9 -m venv .venv
-source .venv/bin/activate
-
-pip install -r requirements.txt
-```
-
-#### Frontend
-
-```sh
-cd ../frontend
-npm install
-# or
-yarn install
-```
-
----
-
-### Windows Setup
-
-#### Backend
-
-1. Install Python 3.9+ from [python.org](https://www.python.org/downloads/windows/) (add to PATH).
-2. Install [MiKTeX](https://miktex.org/download), [Poppler for Windows](https://github.com/oschwartz10612/poppler-windows/releases/), and [FFmpeg](https://www.gyan.dev/ffmpeg/builds/) (add to PATH).
-3. Clone the repository and set up the environment:
-
-```sh
-git clone https://github.com/DemocratiseResearch/saral.git
-cd saral\backend
-
-python -m venv .venv
-.venv\Scripts\activate
-
-pip install -r requirements.txt
-```
-
-#### Frontend
-
-```sh
-cd ..\frontend
-npm install
-# or
-yarn install
-```
-
----
-
-## Configuration
-
-### API Keys
-
-Create a `.env` file in the `backend/` directory:
-
-```
-GOOGLE_API_KEY=your_gemini_api_key
-SARVAM_API_KEY=your_sarvam_api_key
-```
-
-- **Google Gemini API Key:** [Google AI Studio](https://makersuite.google.com/)
-- **Sarvam TTS API Key (optional):** [Sarvam AI](https://sarvam.ai/)
-
-You can also provide these keys via the web interface at runtime.
-
----
-
-## Running the Application
-
-### Backend
-
-```sh
+# Backend
 cd backend
-source .venv/bin/activate  # or .venv\Scripts\activate on Windows
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+# Frontend
+cd ../frontend
+npm install
+```
+
+---
+
+## 🔧 Configuration
+
+Create `.env` in `backend/` directory:
+
+```bash
+GEMINI_API_KEY_1=AIzaSy...    # Get from https://aistudio.google.com/apikey
+GEMINI_API_KEY_2=AIzaSy...    # Optional: for quota rotation
+SARVAM_API_KEY=your_key       # Get from https://www.sarvam.ai/
+HUGGINGFACE_API_KEY=hf_...    # Optional: https://huggingface.co/settings/tokens
+```
+
+**API Key Rotation:** Add multiple Gemini keys (`GEMINI_API_KEY_1`, `_2`, etc.) for automatic rotation when quota limits hit.  
+**Web UI Setup:** Configure keys through the API Setup page after launching the app.
+
+---
+
+## ▶️ Running
+
+**Backend (Terminal 1):**
+```bash
+cd backend && source .venv/bin/activate  # Windows: .venv\Scripts\activate
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
+→ Backend: [http://localhost:8000](http://localhost:8000) | API Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-API available at [http://localhost:8000](http://localhost:8000).
-
-### Frontend
-
-```sh
-cd frontend
-npm start
-# or
-yarn start
+**Frontend (Terminal 2):**
+```bash
+cd frontend && npm start
 ```
-
-App available at [http://localhost:3000](http://localhost:3000).
-
----
-
-## Workflow Guide
-
-1. **API Keys Setup:** Enter your Google Gemini API key (required) and Sarvam TTS API key (optional).
-2. **Paper Upload:** Enter an arXiv URL or upload a LaTeX ZIP.
-3. **Script Generation:** Generate and edit narration scripts for each section.
-4. **Slides Generation:** Assign images to slides and review bullet points.
-5. **Video Generation:** Generate audio narration, synthesize the video, and download results.
+→ Frontend: [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## Troubleshooting
+## 📚 Features Workflow
 
-### Backend
-
-- **PDF Conversion Errors:** Ensure `poppler-utils` and LaTeX (`pdflatex`) are installed and in PATH.
-- **FFmpeg Errors:** Ensure FFmpeg is installed and in PATH.
-- **API Key Errors:** Double-check `.env` formatting and key validity.
-
-### Frontend
-
-- **Connection Errors:** Ensure backend is running and accessible at the configured API URL.
-- **Image Loading Issues:** Clear browser cache and check for CORS errors.
-
-For further help, open an issue on [GitHub](https://github.com/DemocratiseResearch/saral/issues).
+**Video Generation:** Upload paper → Generate script → Edit content → Assign images → Generate video (English/Hindi, adjustable complexity)  
+**Podcast Creation:** Upload paper → Generate dialogue → Customize voices → Create MP3 (natural two-voice conversation)  
+**Mind Mapping:** Upload paper → AI extracts concepts → Download SVG (hierarchical structure, relationships)  
+**Visual Story:** Upload paper → Generate scenes → Create video with text overlays → Watch/download
 
 ---
 
-## Development
+## 🔌 Chrome Extension
 
-- **Frontend:** React, Tailwind CSS, React Icons.
-- **Backend:** FastAPI, modular services for script generation, media processing, and file management.
-- **Styling:** Tailwind CSS with dark mode.
-- **Testing:** Use `npm test` (frontend) and your preferred Python test framework (backend).
+### Installation
+**Chrome Store:** Coming soon  
+**Manual:** `chrome://extensions/` → Enable Developer mode → Load unpacked → Select `chrome-extension` folder
 
----
+### Usage
+1. **Right-click** any paper on arXiv/Google Scholar → "Generate Video/Podcast with SARAL"
+2. **Extension popup** → Detects paper → One-click generation
+3. **Highlight URL** → Right-click → "Process with SARAL"
 
-## API Overview
+### Features
+Auto-detects papers on arXiv, Google Scholar, PubMed, ResearchGate, IEEE, Springer, ScienceDirect | One-click generation | Batch processing | Real-time notifications | Keyboard shortcut: `Ctrl+Shift+S`
 
-API endpoints are defined in [backend/app/routes/](backend/app/routes/):
-
-- `/papers`: Paper upload and management
-- `/scripts`: Script generation and editing
-- `/slides`: Slide creation and download
-- `/media`: Audio and video generation
-- `/images`: Image management
-
-See [http://localhost:8000/docs](http://localhost:8000/docs) for interactive API documentation.
+### Settings
+Configure backend URL (`http://localhost:8000`), complexity level, language, theme via extension popup
 
 ---
 
-## Customization
+## 🔍 Troubleshooting
 
-- **AI Providers:** Configure API keys in `backend/.env`.
-- **TTS Voices:** Edit `frontend/src/utils/constants.js` to add or modify TTS voice options.
-- **Styling:** Customize Tailwind in `frontend/tailwind.config.js` and CSS in `frontend/src/index.css`.
+**Common Issues:**
+- ImportError → `pip install -r requirements.txt` in venv
+- PDF/LaTeX errors → Install poppler, MiKTeX/texlive, add to PATH
+- FFmpeg not found → Install and add to PATH
+- API key invalid → Check `.env` format (no quotes: `KEY=value`)
+- Gemini quota → Add multiple keys: `GEMINI_API_KEY_1`, `_2`, etc.
+- Port in use → Kill process or change port
+- npm install fails → Delete `node_modules`, reinstall
+- No audio in video → Verify Sarvam API key
+- Extension issues → Reload from `chrome://extensions/`
+
+**Get Help:** [GitHub Issues](https://github.com/yourusername/GGW_Megathon_Saral/issues) | [Email](mailto:democratise.research@gmail.com) | [WhatsApp Bot](https://wa.me/14155238886?text=join%20fallen-basket)
 
 ---
 
-## Acknowledgements
+## 🛠️ Development
 
-- [Create React App](https://github.com/facebook/create-react-app)
-- [FastAPI](https://fastapi.tiangolo.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [OpenAI](https://openai.com/)
-- [Google Cloud](https://cloud.google.com/)
+**Tech Stack:**  
+Frontend: React 18.x, Tailwind CSS, Framer Motion, React Router, Axios  
+Backend: FastAPI, Google Gemini API, Sarvam AI, MoviePy, FFmpeg, PyMuPDF, PIL
+
+**Testing:** `npm test` (frontend), `pytest` (backend)  
+**Customization:** Edit `tailwind.config.js` for themes, TTS service for voices, `slide_generator.py` for video templates
+
+---
+
+## 📡 API Documentation
+
+**Base URL:** `http://localhost:8000/api`
+
+**Key Endpoints:** `/papers/upload`, `/papers/arxiv`, `/scripts/generate`, `/slides/generate`, `/media/generate-audio`, `/media/generate-video`, `/podcast/generate`, `/mindmap/generate`, `/visual-storytelling/generate-storytelling-script`, `/visual-storytelling/generate-storytelling-video`
+
+**Interactive Docs:** [http://localhost:8000/docs](http://localhost:8000/docs) - Complete reference, testing, schemas
+
+---
+
+## 🤝 Contributing
+
+**Report Bugs:** Open issue with description, steps to reproduce, error logs  
+**Suggest Features:** Open issue with use case and benefits  
+**Submit PRs:** Fork → Create branch → Commit → Push → Open PR  
+**Code Style:** Python (PEP 8), JavaScript (ESLint), Conventional commits
+
+---
+
+## 📄 License
+
+MIT License © 2025 SARAL AI Team - See [LICENSE](LICENSE) for details
+
+---
+
+## 🙏 Acknowledgements
+
+**AI & APIs:** [Google Gemini](https://ai.google.dev/), [Sarvam AI](https://sarvam.ai/), [Hugging Face](https://huggingface.co/)  
+**Frameworks:** [FastAPI](https://fastapi.tiangolo.com/), [React](https://reactjs.org/), [Tailwind CSS](https://tailwindcss.com/), [MoviePy](https://zulko.github.io/moviepy/), [FFmpeg](https://ffmpeg.org/)  
+**Tools:** [arXiv](https://arxiv.org/), [LaTeX](https://www.latex-project.org/), [Poppler](https://poppler.freedesktop.org/)
+
+---
+
+## 📞 Contact
+
+**Email:** democratise.research@gmail.com  
+**WhatsApp Bot:** [Enable Bot](https://wa.me/14155238886?text=join%20fallen-basket)  
+**GitHub Issues:** [Report Bugs](https://github.com/yourusername/GGW_Megathon_Saral/issues)
+
+---
+
+<div align="center">
+
+⭐ **Star this repository if you found it helpful!**
+
+Made with ❤️ by the SARAL AI Team | **Making Research Accessible to Everyone**
+
+</div>
