@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiArrowRight, FiFileText, FiMic, FiVideo, FiZap, FiCheck, FiHeadphones, FiGitBranch, FiFilm } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 import StarBorder from '../components/ui/star-border';
 import { GlowCard } from '../components/ui/spotlight-card';
 import ComplexityButton from '../components/common/ComplexityButton';
@@ -240,19 +241,18 @@ const LandingPage = () => {
                   <span>Visual Story</span>
                 </div>
               </StarBorder>
-              <StarBorder as={Link} to="/podcast" className="inline-block">
-                <div className="text-sm font-medium text-white">Podcast</div>
-              </StarBorder>
+          
               <StarBorder as={Link} to="/mindmap" className="inline-block">
                 <div className="text-sm font-medium text-white">Mind Map</div>
               </StarBorder>
-              <StarBorder as={Link} to="/about" className="inline-block">
-                <div className="text-sm font-medium text-white">About</div>
-              </StarBorder>
+              
 
               <Link to="/podcast" className="inline-block bg-white text-black rounded-[14px] px-3 py-2 text-sm font-medium shadow-sm hover:shadow-md transition">
                 Podcast
               </Link>
+              <StarBorder as={Link} to="/about" className="inline-block">
+                <div className="text-sm font-medium text-white">About</div>
+              </StarBorder>
               <ComplexityButton />
         </div>
       </div>
@@ -503,6 +503,23 @@ const LandingPage = () => {
   </div>
 </div>
 </footer>
+
+      {/* WhatsApp Floating Button */}
+      <a
+        href="https://wa.me/14155238886?text=join%20fallen-basket"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 z-50 group"
+        aria-label="WhatsApp Bot"
+      >
+        <FaWhatsapp className="w-7 h-7" />
+        
+        {/* Tooltip */}
+        <span className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+          Enable Whatsapp Bot
+          <span className="absolute top-full right-4 -mt-1 border-4 border-transparent border-t-gray-900"></span>
+        </span>
+      </a>
 </div>
 );
 };
