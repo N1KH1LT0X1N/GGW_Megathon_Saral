@@ -7,7 +7,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import api from '../services/api';
-import ThemeToggle from '../components/common/ThemeToggle';
 import ComplexityButton from '../components/common/ComplexityButton';
 import { useComplexity } from '../contexts/ComplexityContext';
 
@@ -234,42 +233,49 @@ const VisualStorytellingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-black to-slate-800 text-white font-primary overflow-hidden relative">
       {/* Header */}
-      <div className="bg-gray-900/50 backdrop-blur-sm border-b border-gray-700/50 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-4">
-            <div className="flex items-center space-x-3">
-              <button
+      <header className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <button 
                 onClick={() => navigate('/')}
-                className="text-gray-400 hover:text-white transition-colors"
+                className="w-8 h-8 bg-gray-900 dark:bg-white rounded-lg flex items-center justify-center"
               >
-                ← Back
+                <span className="text-white dark:text-gray-900 font-bold text-sm">SA</span>
               </button>
-              <div className="h-8 w-px bg-gray-700" />
-              <FiFilm className="w-6 h-6 text-indigo-400" />
-              <h1 className="text-xl font-bold text-white">Visual Storytelling</h1>
+              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+                Visual Storytelling
+              </h1>
             </div>
-            <div className="flex items-center space-x-4">
+            
+            <div className="flex items-center gap-4">
               <ComplexityButton />
-              <ThemeToggle />
+              <button onClick={() => navigate('/')} className="btn-secondary">
+                Back to Home
+              </button>
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Main Content */}
+      <div className="max-w-4xl mx-auto px-6 py-12">
         {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl font-bold text-white mb-4">
-            Transform Research into <span className="text-indigo-400">Cinematic Stories</span>
+          <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
+            <FiFilm className="w-8 h-8 text-purple-600 dark:text-purple-300" />
+          </div>
+          <h2 className="text-3xl font-bold text-white mb-4">
+            Visual Storytelling
           </h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Convert research papers into engaging narrative videos with AI-generated imagery and professional narration
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            Transform research papers into engaging narrative videos with AI-generated imagery and professional narration
           </p>
         </motion.div>
 

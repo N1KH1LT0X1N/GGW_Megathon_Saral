@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiDownload, FiLoader, FiAlertCircle, FiGitBranch, FiUpload, FiLink, FiFile } from 'react-icons/fi';
-import Layout from '../components/common/Layout';
+import { useNavigate } from 'react-router-dom';
+import ComplexityButton from '../components/common/ComplexityButton';
 import { useComplexity } from '../contexts/ComplexityContext';
 import toast from 'react-hot-toast';
 import mermaid from 'mermaid';
 
 const MindmapGeneration = () => {
+  const navigate = useNavigate();
   const { complexity } = useComplexity();
   const [inputMode, setInputMode] = useState('arxiv'); // 'arxiv', 'pdf', 'latex'
   const [arxivUrl, setArxivUrl] = useState('');
@@ -197,21 +199,53 @@ const MindmapGeneration = () => {
   };
 
   return (
-    <Layout title="Mind Map Generation">
-      <div className="max-w-7xl mx-auto space-y-8">
-        {/* Header */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-black to-slate-800 text-white font-primary overflow-hidden relative">
+      {/* Header */}
+      <header className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => navigate('/')}
+                className="w-8 h-8 bg-gray-900 dark:bg-white rounded-lg flex items-center justify-center"
+              >
+                <span className="text-white dark:text-gray-900 font-bold text-sm">SA</span>
+              </button>
+              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+                Mind Map Generator
+              </h1>
+            </div>
+            
+            <div className="flex items-center gap-4">
+              <ComplexityButton />
+              <button onClick={() => navigate('/')} className="btn-secondary">
+                Back to Home
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="max-w-4xl mx-auto px-6 py-12">
+        {/* Hero Section */}
         <motion.div
-          initial={{ opacity: 0, y: 6 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.15 }}
+          className="text-center mb-12"
         >
-          <h1 className="text-2xl font-semibold text-neutral-900 dark:text-white mb-2">
-            Generate Research Paper Mind Map
-          </h1>
-          <p className="text-neutral-600 dark:text-neutral-400">
+          <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+            <FiGitBranch className="w-8 h-8 text-green-600 dark:text-green-300" />
+          </div>
+          <h2 className="text-3xl font-bold text-white mb-4">
+            Mind Map Generation
+          </h2>
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             Transform research papers into visual mind maps using AI - supports arXiv URLs, PDF files, and LaTeX source
           </p>
         </motion.div>
+
+        <div className="max-w-7xl mx-auto space-y-8">
 
         {/* Input Section with Tabs */}
         <motion.div
@@ -509,8 +543,9 @@ const MindmapGeneration = () => {
             </p>
           </motion.div>
         )}
+        </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

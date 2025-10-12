@@ -46,7 +46,11 @@ export function StarBorder({
         'relative z-10 border text-center text-sm py-2 px-3 rounded-[14px]',
         'text-white',
         'bg-gradient-to-b from-background/90 to-muted/90 border-border/40',
-        'dark:from-background dark:to-muted dark:border-border'
+        'dark:from-background dark:to-muted dark:border-border',
+        'transition-all duration-200 ease-in-out',
+        'hover:scale-105 hover:shadow-lg hover:shadow-white/20',
+        'hover:bg-gradient-to-b hover:from-background hover:to-muted/95',
+        'hover:border-white/60'
       )}>
         {children}
       </div>

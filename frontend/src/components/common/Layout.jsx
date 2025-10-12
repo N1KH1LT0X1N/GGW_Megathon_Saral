@@ -60,7 +60,7 @@ const Layout = ({ children, title, breadcrumbs = [] }) => {
             )}
           {title && (
             <div className="mb-8">
-              <h1 className="text-2xl font-semibold text-neutral-900 dark:text-white">
+              <h1 className="text-2xl font-semibold text-white">
                 {title}
               </h1>
             </div>

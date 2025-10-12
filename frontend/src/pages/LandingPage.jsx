@@ -247,9 +247,9 @@ const LandingPage = () => {
               </StarBorder>
               
 
-              <Link to="/podcast" className="inline-block bg-white text-black rounded-[14px] px-3 py-2 text-sm font-medium shadow-sm hover:shadow-md transition">
-                Podcast
-              </Link>
+              <StarBorder as={Link} to="/podcast" className="inline-block">
+                <div className="text-sm font-medium text-white">Podcast</div>
+              </StarBorder>
               <StarBorder as={Link} to="/about" className="inline-block">
                 <div className="text-sm font-medium text-white">About</div>
               </StarBorder>

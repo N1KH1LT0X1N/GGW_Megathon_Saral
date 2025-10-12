@@ -262,10 +262,10 @@ const PodcastGeneration = () => {
           <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
             <FiHeadphones className="w-8 h-8 text-blue-600 dark:text-blue-300" />
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-3xl font-bold text-white mb-4">
             Interactive Learning Podcast
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             Transform research papers into dynamic conversations between a curious student and an expert teacher
           </p>
         </motion.div>
@@ -351,7 +351,7 @@ const PodcastGeneration = () => {
                     value={arxivUrl}
                     onChange={(e) => setArxivUrl(e.target.value)}
                     placeholder="https://arxiv.org/abs/2301.12345"
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                     disabled={loading}
                   />
                 </div>
@@ -497,7 +497,7 @@ const PodcastGeneration = () => {
                   ) : (
                     <FiCheck className="w-5 h-5 text-green-500" />
                   )}
-                  <span className={`text-sm ${currentStep === step.key ? 'text-gray-900 dark:text-white font-medium' : 'text-gray-500'}`}>
+                  <span className={`text-sm ${currentStep === step.key ? 'text-white font-medium' : 'text-gray-400'}`}>
                     {step.label}
                   </span>
                 </div>
@@ -520,10 +520,10 @@ const PodcastGeneration = () => {
                 <div className="flex items-center gap-3">
                   <FiHeadphones className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    <h3 className="text-lg font-semibold text-white">
                       Podcast Generated!
                     </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-gray-300">
                       {audioFiles.length > 0 
                         ? `${audioFiles.length} audio segments • ${dialogue.length} script segments` 
                         : `${dialogue.length} script segments (audio pending)`}
