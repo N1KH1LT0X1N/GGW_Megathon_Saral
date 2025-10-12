@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiArrowRight, FiFileText, FiMic, FiVideo, FiZap, FiCheck, FiHeadphones } from 'react-icons/fi';
+import { FiArrowRight, FiFileText, FiMic, FiVideo, FiZap, FiCheck, FiHeadphones, FiGitBranch } from 'react-icons/fi';
 import StarBorder from '../components/ui/star-border';
 import { GlowCard } from '../components/ui/spotlight-card';
 // ThemeToggle removed from this page per request
@@ -137,6 +137,16 @@ const LandingPage = () => {
       icon: FiVideo,
       title: 'Video Production',
       description: 'Automatically create professional presentation videos combining slides, narration, and visual elements.'
+    },
+    {
+      icon: FiHeadphones,
+      title: 'Podcast Generation',
+      description: 'Transform research papers into engaging podcast episodes with natural conversations and explanations.'
+    },
+    {
+      icon: FiGitBranch,
+      title: 'Mind Map Creation',
+      description: 'Generate visual mind maps from arXiv papers to quickly understand research structure and key concepts.'
     }
   ];
 
@@ -165,6 +175,12 @@ const LandingPage = () => {
             </div>
             
             <div className="flex items-center gap-4">
+              <StarBorder as={Link} to="/podcast" className="inline-block">
+                <div className="text-sm font-medium text-white">Podcast</div>
+              </StarBorder>
+              <StarBorder as={Link} to="/mindmap" className="inline-block">
+                <div className="text-sm font-medium text-white">Mind Map</div>
+              </StarBorder>
               <StarBorder as={Link} to="/about" className="inline-block">
                 <div className="text-sm font-medium text-white">About</div>
               </StarBorder>
@@ -295,7 +311,7 @@ const LandingPage = () => {
                 </p>
       </motion.div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {features.map((feature, index) => (
           <FeatureCard
             key={feature.title}

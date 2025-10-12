@@ -20,6 +20,7 @@ import Results from './pages/Results';
 import About from './pages/About';
 import VideosPage from './pages/VideosPage';
 import PodcastGeneration from './pages/PodcastGeneration';
+import MindmapGeneration from './pages/MindmapGeneration';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
     <Route path="/about" element={<About />} />
     <Route path="/sample" element={<VideosPage/>} />
     <Route path="/podcast" element={<PodcastGeneration />} />
+    <Route path="/mindmap" element={<MindmapGeneration />} />
     <Route path="/api-setup" element={
       <ProtectedRoute>
       <ApiSetup />
