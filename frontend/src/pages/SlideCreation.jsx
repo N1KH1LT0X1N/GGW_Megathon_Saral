@@ -1,4 +1,4 @@
-/* SlideCreation.jsx – Complete component with auto-generation and modern styling */
+                                      /* SlideCreation.jsx – Complete component with auto-generation and modern styling */
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import {
@@ -10,6 +10,8 @@ import LoadingSpinner   from '../components/common/LoadingSpinner';
 import { useWorkflow }  from '../contexts/WorkflowContext';
 import { apiService }   from '../services/api';
 import { downloadBlob } from '../utils/helpers';
+import StarBorder       from '../components/ui/star-border';
+import { GlowCard }     from '../components/ui/spotlight-card';
 import toast            from 'react-hot-toast';
 
 /* ─────────── minimal slide preview ─────────── */
@@ -19,12 +21,7 @@ const SlidePreview = ({ slides, current, setCurrent }) => {
   return (
     <div className="space-y-3">
       {/* main slide */}
-      <div className="
-        relative aspect-video
-        bg-white dark:bg-gray-900
-        border border-gray-300 dark:border-gray-700
-        rounded-md shadow-sm overflow-hidden
-      ">
+      <div className="relative aspect-video bg-neutral-900 text-white border border-neutral-800 rounded-md shadow-sm overflow-hidden">
         <img
           src={slides[current]}
           alt={`Slide ${current + 1}`}
@@ -60,14 +57,11 @@ const SlidePreview = ({ slides, current, setCurrent }) => {
       {/* dot indicators */}
       {slides.length > 1 && (
         <div className="flex justify-center gap-2">
-          {slides.map((_, i) => (
+            {slides.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrent(i)}
-              className={`w-2.5 h-2.5 rounded-full transition
-                          ${i === current
-                            ? 'bg-gray-900 dark:bg-gray-100'
-                            : 'bg-gray-400 hover:bg-gray-500 dark:bg-gray-600 dark:hover:bg-gray-500'}`}
+              className={`w-2.5 h-2.5 rounded-full transition ${i === current ? 'bg-white' : 'bg-gray-600 hover:bg-gray-500'}`}
             />
           ))}
         </div>
@@ -78,17 +72,13 @@ const SlidePreview = ({ slides, current, setCurrent }) => {
 
 /* ─────────── preview container ─────────── */
 const PreviewCard = ({ slides, loading, current, setCurrent }) => (
-  <div className="
-    bg-white dark:bg-gray-900
-    border border-gray-300 dark:border-gray-700
-    rounded-md shadow-sm p-5
-  ">
+  <GlowCard className="p-5 bg-neutral-900 text-white rounded-md shadow-sm border border-neutral-800">
     <SlidePreview
       slides={slides}
       current={current}
       setCurrent={setCurrent}
     />
-  </div>
+  </GlowCard>
 );
 
 
@@ -236,14 +226,14 @@ const Header = ({
   dlLatex,
   toNext
 }) => (
-  <div className="bg-white dark:bg-neutral-800 rounded-md p-5 border border-neutral-300 dark:border-neutral-600 shadow-sm">
+  <div className="bg-neutral-900 text-white rounded-md p-5 border border-neutral-800 shadow-sm">
     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
       {/* title + subtitle */}
       <div>
-        <h2 className="text-2xl font-sans font-semibold text-gray-900 dark:text-gray-100">
+        <h2 className="text-2xl font-sans font-semibold text-white">
           Create Presentation Slides
         </h2>
-        <p className="font-sans text-neutral-600 dark:text-neutral-400">
+        <p className="font-sans text-neutral-300">
           Generate beautiful LaTeX slides from your scripts
         </p>
       </div>
@@ -332,15 +322,15 @@ const ProgressBanner = () => (
   <motion.div 
     initial={{ opacity: 0, y: 20 }} 
     animate={{ opacity: 1, y: 0 }}
-    className="bg-brand-50 dark:bg-brand-900/20 border border-brand-200 dark:border-brand-800 rounded-xl p-6"
+    className="bg-neutral-900 text-white rounded-xl p-6 border border-neutral-800"
   >
     <div className="flex items-center space-x-3">
       <LoadingSpinner size="md"/>
       <div>
-        <h3 className="text-lg font-heading font-semibold text-brand-800 dark:text-brand-200 mb-1">
+        <h3 className="text-lg font-heading font-semibold text-white mb-1">
           Generating Slides…
         </h3>
-        <p className="font-body text-brand-700 dark:text-brand-300 text-sm">
+        <p className="font-body text-neutral-300 text-sm">
           AI is converting your scripts into LaTeX slides. This may take a moment.
         </p>
       </div>
@@ -349,12 +339,12 @@ const ProgressBanner = () => (
 );
 
 const EmptyState = () => (
-  <div className="text-center py-12">
-    <FiSliders className="w-16 h-16 text-neutral-400 dark:text-neutral-500 mx-auto mb-4"/>
-    <h2 className="text-2xl font-heading font-semibold text-neutral-900 dark:text-white mb-2">
+  <div className="text-center py-12 bg-neutral-900 text-white rounded-md">
+    <FiSliders className="w-16 h-16 text-neutral-400 mx-auto mb-4"/>
+    <h2 className="text-2xl font-heading font-semibold text-white mb-2">
       No Paper Selected
     </h2>
-    <p className="font-body text-neutral-600 dark:text-neutral-400">
+    <p className="font-body text-neutral-300">
       Please complete the script generation step first.
     </p>
   </div>
@@ -364,13 +354,13 @@ const GeneratePrompt = ({ onGenerate, loading }) => (
   <motion.div 
     initial={{ opacity: 0, y: 20 }} 
     animate={{ opacity: 1, y: 0 }}
-    className="text-center py-12 bg-neutral-50 dark:bg-neutral-800 rounded-xl border-2 border-dashed border-neutral-300 dark:border-neutral-600"
+    className="text-center py-12 bg-neutral-900 text-white rounded-xl border-2 border-dashed border-neutral-800"
   >
-    <FiSliders className="w-16 h-16 text-neutral-400 dark:text-neutral-500 mx-auto mb-4"/>
-    <h3 className="text-xl font-heading font-semibold text-neutral-900 dark:text-white mb-2">
+    <FiSliders className="w-16 h-16 text-neutral-400 mx-auto mb-4"/>
+    <h3 className="text-xl font-heading font-semibold text-white mb-2">
       Ready to Create Slides
     </h3>
-    <p className="font-body text-neutral-600 dark:text-neutral-400 mb-6">
+    <p className="font-body text-neutral-300 mb-6">
       Generate professional LaTeX slides from your presentation scripts.
     </p>
     <PrimaryButton 

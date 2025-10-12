@@ -40,6 +40,11 @@ const LandingPage = () => {
   const [ripples, setRipples] = useState([]);
   const [scrolled, setScrolled] = useState(false);
   const floatingElementsRef = useRef([]);
+  // Dropdown state for Get Started
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+  const buttonRef = useRef(null);
+  const [menuPos, setMenuPos] = useState({ top: 0, left: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -80,6 +85,54 @@ const LandingPage = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [scrolled]);
+
+  // close dropdown on outside click or escape
+  useEffect(() => {
+    const onDocClick = (e) => {
+      if (menuOpen) {
+        if (menuRef.current && !menuRef.current.contains(e.target) && buttonRef.current && !buttonRef.current.contains(e.target)) {
+          setMenuOpen(false);
+        }
+      }
+    };
+
+    const onEsc = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+
+    document.addEventListener('click', onDocClick);
+    document.addEventListener('keydown', onEsc);
+    return () => {
+      document.removeEventListener('click', onDocClick);
+      document.removeEventListener('keydown', onEsc);
+    };
+  }, [menuOpen]);
+
+  // compute menu position when opening and close on resize/scroll
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+
+    const computePos = () => {
+      const btn = buttonRef.current;
+      const menuWidth = 224; // w-56
+      if (btn) {
+        const rect = btn.getBoundingClientRect();
+        const left = Math.max(8, rect.left + (rect.width / 2) - (menuWidth / 2));
+        const top = rect.bottom + 8; // 8px gap
+        setMenuPos({ left, top });
+      }
+    };
+
+    computePos();
+    const onResize = () => setMenuOpen(false);
+    const onScroll = () => setMenuOpen(false);
+    window.addEventListener('resize', onResize);
+    window.addEventListener('scroll', onScroll, true);
+    return () => {
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('scroll', onScroll, true);
+    };
+  }, [menuOpen]);
 
   const pageStyles = `
     #mouse-gradient-react { position: fixed; pointer-events: none; border-radius: 9999px; background-image: radial-gradient(circle, rgba(156, 163, 175, 0.06), rgba(107, 114, 128, 0.06), transparent 70%); transform: translate(-50%, -50%); will-change: left, top, opacity; transition: left 70ms linear, top 70ms linear, opacity 300ms ease-out; z-index:0; mix-blend-mode: overlay }
@@ -196,6 +249,10 @@ const LandingPage = () => {
               <StarBorder as={Link} to="/about" className="inline-block">
                 <div className="text-sm font-medium text-white">About</div>
               </StarBorder>
+
+              <Link to="/podcast" className="inline-block bg-white text-black rounded-[14px] px-3 py-2 text-sm font-medium shadow-sm hover:shadow-md transition">
+                Podcast
+              </Link>
               <ComplexityButton />
         </div>
       </div>
@@ -272,15 +329,40 @@ const LandingPage = () => {
 
             <div className="text-center max-w-4xl mx-auto relative">
               <div className="mt-6 flex items-center justify-center gap-3">
-                <StarBorder as={Link} to="/api-setup" className="inline-block">
-                  <div className="flex items-center gap-2">
-                    Get Started <FiArrowRight className="w-4 h-4" />
-                  </div>
-                </StarBorder>
+                {/* Get Started with dropdown */}
+                <div className="relative inline-block">
+                  <button
+                    ref={buttonRef}
+                    onClick={() => setMenuOpen(prev => !prev)}
+                    aria-haspopup="true"
+                    aria-expanded={menuOpen}
+                    className="w-56 h-12 inline-flex items-center justify-center gap-2 rounded-lg bg-neutral-800/80 px-4 py-3 text-sm font-medium text-white hover:bg-neutral-700/90 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                  >
+                    <span className='text-xl'>Get Started</span>
+                    <FiArrowRight className="w-4 h-4" />
+                  </button>
+                
 
-                <StarBorder as={Link} to="/sample" className="inline-block">
-                  <div className="text-sm font-medium text-white">Learn more</div>
-                </StarBorder>
+                  {menuOpen && (
+                    <div
+                      ref={menuRef}
+                      style={{ position: 'fixed', left: `${menuPos.left}px`, top: `${menuPos.top}px` }}
+                      className="w-56 bg-neutral-900 text-white rounded-lg shadow-2xl z-50 ring-1 ring-white/10 overflow-hidden"
+                    >
+                      {/* caret */}
+                      <div style={{ position: 'absolute', right: '16px', top: '-8px', width: 0, height: 0, borderLeft: '8px solid transparent', borderRight: '8px solid transparent', borderBottom: '8px solid rgba(15,23,42,1)' }} />
+                      <nav className="flex flex-col" aria-label="Get started menu">
+                        <Link to="/api-setup" onClick={() => setMenuOpen(false)} className="block px-4 py-3 hover:bg-white/5">Video</Link>
+                        <Link to="/mindmap" onClick={() => setMenuOpen(false)} className="block px-4 py-3 hover:bg-white/5">Mind Map</Link>
+                        <Link to="/podcast" onClick={() => setMenuOpen(false)} className="block px-4 py-3 hover:bg-white/5">Podcast</Link>
+                      </nav>
+                    </div>
+                  )}
+                </div>
+
+                <a href="/sample" className="w-40 h-12 inline-flex items-center justify-center gap-2 rounded-lg bg-neutral-800/80 px-4 py-3 text-sm font-medium text-white hover:bg-neutral-700/90 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                  <div className="text-xl">Learn more</div>
+                </a>
               </div>
             </div>
           </div>

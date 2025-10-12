@@ -34,10 +34,10 @@ const ChromeTabs = ({ tabs = [], activeTab, onTabClick, showNavigation }) => {
               whileTap={{ scale: 0.98 }}
               onClick={() => onTabClick(tab.id)}
               className={`relative px-3 sm:px-4 py-2 sm:py-3 rounded-t-md font-medium transition-all duration-200 focus:outline-none whitespace-nowrap min-w-[100px] sm:min-w-[120px] flex items-center justify-center gap-2 text-sm sm:text-base ${
-                isActive
-                ? 'bg-white dark:bg-gray-900 border-x border-t border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 shadow-sm -mb-px'
-                : 'bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
-              }`}
+                    isActive
+                    ? 'bg-[#0b0b0b] border-x border-t border-neutral-700 text-neutral-100 shadow-sm -mb-px'
+                    : 'bg-[#0b0b0b] text-neutral-300 hover:bg-[#0b0b0b]'
+                  }`}
               style={{
                 borderBottom: isActive ? '1px solid transparent' : undefined,
                 marginBottom: isActive ? '-1px' : '0',
@@ -64,7 +64,7 @@ const ChromeTabs = ({ tabs = [], activeTab, onTabClick, showNavigation }) => {
               {isActive && (
                 <motion.div
                   layoutId="activeTab"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900 dark:bg-gray-100"
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-neutral-100"
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 />
               )}
@@ -80,7 +80,7 @@ const ChromeTabs = ({ tabs = [], activeTab, onTabClick, showNavigation }) => {
             <button
               onClick={handlePrevious}
               disabled={!canGoPrev}
-              className="flex items-center gap-2 px-4 py-3 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 min-h-[44px] touch-manipulation"
+              className="flex items-center gap-2 px-4 py-3 text-neutral-300 hover:text-neutral-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 rounded-md hover:bg-neutral-800 min-h-[44px] touch-manipulation"
             >
               <FiChevronLeft className="w-5 h-5" />
               <span className="text-sm font-medium">Previous</span>
@@ -93,7 +93,7 @@ const ChromeTabs = ({ tabs = [], activeTab, onTabClick, showNavigation }) => {
             <button
               onClick={handleNext}
               disabled={!canGoNext}
-              className="flex items-center gap-2 px-4 py-3 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 min-h-[44px] touch-manipulation"
+              className="flex items-center gap-2 px-4 py-3 text-neutral-300 hover:text-neutral-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 rounded-md hover:bg-neutral-800 min-h-[44px] touch-manipulation"
             >
               <span className="text-sm font-medium">Next</span>
               <FiChevronRight className="w-5 h-5" />
