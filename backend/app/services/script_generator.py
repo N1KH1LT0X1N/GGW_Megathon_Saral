@@ -109,14 +109,44 @@ def clean_text(text):
     
     return text
 
-def generate_full_script_with_gemini(api_key, input_text):
+def generate_full_script_with_gemini(api_key, input_text, complexity_level="medium"):
     """Generate presentation script using Gemini API with improved prompts from app_1.py"""
     genai.configure(api_key=api_key)
     model = genai.GenerativeModel('gemini-2.0-flash')
     
+    # Complexity level instructions
+    complexity_instructions = {
+        'easy': """
+**COMPLEXITY LEVEL: BEGINNER FRIENDLY**
+- Use simple, everyday language that a high school student can understand
+- Avoid technical jargon - if you must use a technical term, explain it in simple words
+- Use analogies and real-world examples to explain concepts
+- Focus on the main ideas and big picture
+- Break down complex concepts into simple steps""",
+        'medium': """
+**COMPLEXITY LEVEL: INTERMEDIATE**
+- Use clear language suitable for educated professionals or undergraduate students
+- Balance accessibility with some technical terminology
+- Explain technical terms but assume basic familiarity
+- Provide moderate depth without oversimplifying
+- Include key technical concepts with clear context""",
+        'advanced': """
+**COMPLEXITY LEVEL: EXPERT**
+- Use full academic and technical terminology appropriate for domain experts
+- Assume research background and domain expertise
+- Include detailed methodology and technical nuances
+- Discuss implications, limitations, and future directions in depth
+- Target graduate students, researchers, and academics"""
+    }
+    
+    complexity_instruction = complexity_instructions.get(complexity_level, complexity_instructions['medium'])
+    
     # Enhanced prompt based on app_1.py
     prompt = f"""
 Create a script for a 3-5 minute educational video based on this research paper.
+
+{complexity_instruction}
+
 STRUCTURE:
 Create scripts for exactly these 5 sections:
 **Introduction**
@@ -124,15 +154,16 @@ Create scripts for exactly these 5 sections:
 **Results**
 **Discussion**
 **Conclusion**
+
 Important rules:
 1. Each section MUST start with its exact heading as shown above
 2. Keep content clear and focused - about 2-3 paragraphs per section
-3. Focus on explaining the research in simple terms
-4. Avoid technical jargon where possible
-5. Make it engaging for a general audience
-6. DO NOT include any video/animation directions or [Narrator:] tags
-7. Make sure that you do not use contracted words, for example: we'll, we're.
-Here’s the paper text to base the script on:
+3. Adjust the language complexity according to the level specified above
+4. Make it engaging for the target audience
+5. DO NOT include any video/animation directions or [Narrator:] tags
+6. Make sure that you do not use contracted words, for example: we'll, we're.
+
+Here's the paper text to base the script on:
 Research Paper Content:
 {input_text}
 

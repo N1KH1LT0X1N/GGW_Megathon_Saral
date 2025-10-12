@@ -339,9 +339,9 @@ class ScriptsService {
     this.http = httpClient;
   }
 
-  async generate(paperId) {
+  async generate(paperId, complexity_level = 'medium') {
     return this.http.withRetry(() => 
-      this.http.post(`/scripts/${paperId}/generate`)
+      this.http.post(`/scripts/${paperId}/generate`, { complexity_level })
       );
   }
 

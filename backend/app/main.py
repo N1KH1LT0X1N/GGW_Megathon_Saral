@@ -1,4 +1,10 @@
 # main.py (updated)
+# Python 3.13 compatibility fix for missing cgi module
+import sys
+if sys.version_info >= (3, 13):
+    from app.services import cgi_compat
+    sys.modules['cgi'] = cgi_compat.cgi
+
 from fastapi import FastAPI, BackgroundTasks, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -16,7 +22,7 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-from app.routes import api_keys, papers, scripts, slides, media, images, auth, podcast
+from app.routes import api_keys, papers, scripts, slides, media, images, auth, podcast, mindmap
 from app.auth.dependencies import get_current_user, get_current_user_optional
 
 # Create temp directories
@@ -30,8 +36,8 @@ for dir_path in temp_dirs:
     Path(dir_path).mkdir(parents=True, exist_ok=True)
 
 app = FastAPI(
-    title="Saral AI - Academic Paper to Video API",
-    description="Convert academic papers to presentation videos with Google OAuth",
+    title="Saral AI - Academic Research Platform",
+    description="Convert academic papers to presentation videos, podcasts, and mind maps with Google OAuth",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc"
@@ -103,13 +109,15 @@ app.include_router(slides.router, prefix="/api/slides", tags=["Slides"])
 app.include_router(media.router, prefix="/api/media", tags=["Media"])
 app.include_router(images.router, prefix="/api/images", tags=["Images"])
 app.include_router(podcast.router, prefix="/api/podcast", tags=["Podcast"])
+app.include_router(mindmap.router, prefix="/api/mindmap", tags=["Mindmap"])
 
 # Public endpoints
 @app.get("/")
 async def root():
     """Public root endpoint"""
     return {
-        "message": "Saral AI Academic Paper to Video API",
+        "message": "Saral AI Academic Research Platform",
+        "description": "Convert papers to videos, podcasts, and mind maps",
         "version": "1.0.0",
         "docs": "/docs",
         "health": "/health"
