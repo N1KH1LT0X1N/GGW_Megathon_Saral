@@ -4,8 +4,9 @@ import { FiHeadphones, FiPlay, FiDownload, FiLoader, FiCheck, FiAlertCircle, FiU
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import api from '../services/api';
-import ThemeToggle from '../components/common/ThemeToggle';
 import ComplexityButton from '../components/common/ComplexityButton';
+import StarBorder from '../components/ui/star-border';
+import { GlowCard } from '../components/ui/spotlight-card';
 import { useComplexity } from '../contexts/ComplexityContext';
 
 const PodcastGeneration = () => {
@@ -223,7 +224,7 @@ const PodcastGeneration = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-black to-slate-800 text-white font-primary overflow-hidden relative">
       {/* Header */}
       <header className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -242,7 +243,6 @@ const PodcastGeneration = () => {
             
             <div className="flex items-center gap-4">
               <ComplexityButton />
-              <ThemeToggle />
               <button onClick={() => navigate('/')} className="btn-secondary">
                 Back to Home
               </button>
@@ -275,8 +275,8 @@ const PodcastGeneration = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="card p-8"
           >
+            <GlowCard className="card p-8 bg-white/5 text-white rounded-xl shadow-sm">
             {/* Input Type Tabs */}
             <div className="flex gap-2 mb-6 border-b border-gray-200 dark:border-gray-700">
               <button
@@ -474,6 +474,7 @@ const PodcastGeneration = () => {
                 </button>
               </form>
             )}
+            </GlowCard>
           </motion.div>
         )}
 
@@ -482,9 +483,9 @@ const PodcastGeneration = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="card p-8 mb-6"
           >
-            <div className="space-y-4">
+            <GlowCard className="card p-8 mb-6 bg-white/5 text-white rounded-xl shadow-sm">
+              <div className="space-y-4">
               {[
                 { key: 'uploading', label: 'Uploading and processing paper' },
                 { key: 'generating', label: 'Generating dialogue script' },
@@ -501,7 +502,8 @@ const PodcastGeneration = () => {
                   </span>
                 </div>
               ))}
-            </div>
+              </div>
+            </GlowCard>
           </motion.div>
         )}
 
@@ -513,7 +515,7 @@ const PodcastGeneration = () => {
             className="space-y-6"
           >
             {/* View Toggle */}
-            <div className="card p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
+            <GlowCard className="card p-4 bg-white/5 text-white rounded-xl shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <FiHeadphones className="w-6 h-6 text-blue-600 dark:text-blue-400" />
@@ -567,7 +569,7 @@ const PodcastGeneration = () => {
 
               {/* Now Playing - Only show in Audio Player mode */}
               {!showScript && playingIndex !== null && audioFiles.length > 0 && (
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-4 mb-4">
+                <GlowCard className="p-4 mb-4 bg-white/5">
                   <div className="flex items-center gap-3 mb-3">
                     <span className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase">
                       Now Playing
@@ -601,14 +603,14 @@ const PodcastGeneration = () => {
                       <FiSkipForward className="w-4 h-4" />
                     </button>
                   </div>
-                </div>
+                </GlowCard>
               )}
-            </div>
+            </GlowCard>
 
             {/* Audio Player List - Show when audio exists and not viewing script */}
             {!showScript && audioFiles.length > 0 && (
-              <div className="card p-6">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              <GlowCard className="card p-6 bg-white/5 text-white rounded-xl shadow-sm">
+                <h3 className="text-xl font-semibold text-white mb-4">
                   🎵 All Audio Episodes
                 </h3>
                 <div className="space-y-3">
@@ -638,43 +640,43 @@ const PodcastGeneration = () => {
                       </button>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
+                          <span className="text-xs font-medium text-gray-300 uppercase">
                             {item.speaker}
                           </span>
                           <span className="text-xs text-gray-400">#{index + 1}</span>
                         </div>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">
+                        <p className="text-sm text-gray-300">
                           {item.text}
                         </p>
                       </div>
                     </div>
                   </div>
                 ))}
-              </div>
-              </div>
+                </div>
+              </GlowCard>
             )}
 
             {/* Script View - Show when viewing script or no audio */}
             {(showScript || audioFiles.length === 0) && (
-              <div className="card p-6">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              <GlowCard className="card p-6 bg-white/5 text-white rounded-xl shadow-sm">
+                <h3 className="text-xl font-semibold text-white mb-4">
                   📝 Podcast Script
                 </h3>
                 <div className="space-y-3">
                   {dialogue.map((item, index) => (
                     <div
                       key={index}
-                      className="p-4 rounded-lg border border-gray-200 dark:border-gray-700"
+                      className="p-4 rounded-lg border border-gray-700"
                     >
                       <div className="flex items-start gap-3">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
+                            <span className="text-xs font-medium text-gray-300 uppercase">
                               {item.speaker}
                             </span>
                             <span className="text-xs text-gray-400">#{index + 1}</span>
                           </div>
-                          <p className="text-sm text-gray-700 dark:text-gray-300">
+                          <p className="text-sm text-gray-300">
                             {item.text}
                           </p>
                         </div>
@@ -682,7 +684,7 @@ const PodcastGeneration = () => {
                     </div>
                   ))}
                 </div>
-              </div>
+              </GlowCard>
             )}
 
             <div className="flex gap-4">
