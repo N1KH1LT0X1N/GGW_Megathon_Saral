@@ -30,7 +30,7 @@ function App() {
     <ThemeProvider>
     <ApiProvider>
     <WorkflowProvider>
-    <div className="App min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="App min-h-screen bg-gray-900 dark:bg-gray-900 transition-colors duration-300">
     <Routes>
     <Route path="/" element={<LandingPage />} />
     <Route path="/about" element={<About />} />

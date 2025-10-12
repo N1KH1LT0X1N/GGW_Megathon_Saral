@@ -7,6 +7,8 @@ import {
 } from 'react-icons/fi';
 import Layout           from '../components/common/Layout';
 import LoadingSpinner   from '../components/common/LoadingSpinner';
+import StarBorder       from '../components/ui/star-border';
+import { GlowCard }     from '../components/ui/spotlight-card';
 import { useWorkflow }  from '../contexts/WorkflowContext';
 import { apiService }   from '../services/api';
 import toast            from 'react-hot-toast';
@@ -16,15 +18,14 @@ import { TTS_VOICES }   from '../utils/constants';
 /* ───────────────── voice selector ───────────────── */
 const VoiceSelector = ({ language, value, onChange }) => (
   <div className="space-y-2">
-    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+    <label className="block text-sm font-medium text-white">
       Voice
     </label>
     <select
       value={value}
       onChange={e => onChange(language, e.target.value)}
-      className="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-900
-                 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100
-                 focus:outline-none focus:ring-2 focus:ring-gray-700">
+      className="w-full px-3 py-2 border rounded-md bg-neutral-800 border-neutral-700 text-neutral-100
+                 focus:outline-none focus:ring-2 focus:ring-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed">
       {Object.entries(TTS_VOICES[language.toUpperCase()] || {})
         .map(([k, label]) => <option key={k} value={k}>{label}</option>)}
     </select>
@@ -154,14 +155,15 @@ const MediaGeneration = () => {
 
   return (
     <Layout breadcrumbs={crumbs}>
-      <div className="max-w-3xl mx-auto space-y-8">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-black to-slate-800 text-white py-8">
+        <div className="max-w-3xl mx-auto space-y-8">
 
         {/* header */}
-        <div>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
+        <div className="px-4">
+          <h2 className="text-2xl font-semibold text-white">
             Generate Audio & Video
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
+           <p className="text-neutral-300">
             {mediaGenerated 
               ? 'Your audio and video have been generated successfully!' 
               : 'Click once – the system narrates your slides and builds the video automatically.'
@@ -173,117 +175,104 @@ const MediaGeneration = () => {
         <motion.div
           initial={{ opacity:0, y:20 }}
           animate={{ opacity:1, y:0 }}
-          className="bg-white dark:bg-neutral-800 rounded-xl p-6
-                     border border-neutral-200 dark:border-neutral-700 space-y-6">
+          className="p-6 space-y-6"
+        >
+          <GlowCard className="p-6 bg-neutral-900 text-white rounded-xl border border-neutral-800 space-y-6">
 
-          {/* spinner bar */}
-          {(audioLoading || videoLoading) && (
-            <div className="h-1 rounded bg-gray-200 dark:bg-gray-700 overflow-hidden mb-4">
-              <div className="h-full w-full animate-pulse bg-gray-700 dark:bg-gray-400" />
-            </div>
-          )}
+            {/* spinner bar */}
+            {(audioLoading || videoLoading) && (
+              <div className="h-1 rounded overflow-hidden mb-4 bg-neutral-800">
+                <div className="h-full w-full animate-pulse bg-neutral-700" />
+              </div>
+            )}
 
-          {/* Success indicator */}
-          {mediaGenerated && !audioLoading && !videoLoading && (
-            <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4 mb-6">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
-                  <FiVideo className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                </div>
-                <div>
-                  <h4 className="font-medium text-neutral-900 dark:text-neutral-100">
-                    Media Generation Complete
-                  </h4>
-                  <p className="text-sm text-gray-700 dark:text-gray-300">
-                    Audio narration and video presentation have been successfully created.
-                  </p>
+            {/* Success indicator */}
+            {mediaGenerated && !audioLoading && !videoLoading && (
+              <div className="bg-neutral-800 rounded-lg p-4 mb-6 border border-neutral-700">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-neutral-800 rounded-full flex items-center justify-center">
+                    <FiVideo className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-white">
+                      Media Generation Complete
+                    </h4>
+                    <p className="text-sm text-neutral-300">
+                      Audio narration and video presentation have been successfully created.
+                    </p>
+                  </div>
                 </div>
               </div>
+            )}
+
+            {/* settings grid - disabled when media is generated */}
+            <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${mediaGenerated ? 'opacity-50' : ''}`}>
+              <VoiceSelector
+                language={selectedLanguage}
+                value={voiceSelections[selectedLanguage]}
+                onChange={changeVoice}
+              />
+
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-neutral-300">
+                  Language
+                </label>
+                <select
+                  value={selectedLanguage}
+                  onChange={e => setSelectedLang(e.target.value)}
+                  disabled={mediaGenerated}
+                  className="w-full px-3 py-2 border rounded-md bg-neutral-800 border-neutral-700 text-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                  {SUPPORTED_LANGUAGES.map(l => <option key={l}>{l}</option>)}
+                </select>
+              </div>
             </div>
-          )}
 
-          {/* settings grid - disabled when media is generated */}
-          <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${mediaGenerated ? 'opacity-50' : ''}`}>
-            {/* Only show VoiceSelector for selected language */}
-            <VoiceSelector
-              language={selectedLanguage}
-              value={voiceSelections[selectedLanguage]}
-              onChange={changeVoice}
-            />
-
-            {/* language picker */}
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Language
-              </label>
-              <select
-                value={selectedLanguage}
-                onChange={e => setSelectedLang(e.target.value)}
-                disabled={mediaGenerated}
-                className="w-full px-3 py-2 border rounded-md
-                           bg-white dark:bg-gray-900
-                           border-gray-300 dark:border-gray-600
-                           text-gray-900 dark:text-gray-100
-                           focus:outline-none focus:ring-2 focus:ring-gray-700
-                           disabled:opacity-50 disabled:cursor-not-allowed">
-                {SUPPORTED_LANGUAGES.map(l => <option key={l}>{l}</option>)}
-              </select>
-            </div>
-          </div>
-
-          {/* Action buttons */}
-          {!mediaGenerated ? (
-            /* Generate button - shown when media not generated */
-            <button
-              onClick={generateAudio}
-              disabled={audioLoading || videoLoading}
-              className="w-full flex items-center justify-center gap-2 px-6 py-3
-                         rounded-md bg-gray-900 hover:bg-gray-800 disabled:bg-gray-400
-                         text-white font-medium transition-colors duration-150">
-              {(audioLoading || videoLoading) ? (
-                <>
-                  <LoadingSpinner size="sm" />
-                  {audioLoading ? 'Generating audio…' : 'Building video…'}
-                </>
-              ) : (
-                <>
-                  <FiMic className="w-5 h-5" />
-                  Generate Audio & Video
-                </>
-              )}
-            </button>
-          ) : (
-            /* Results button - shown when media is generated */
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+            {/* Action buttons */}
+            {!mediaGenerated ? (
               <button
-                onClick={goToResults}
-                className="flex-1 flex items-center justify-center gap-2 
-                           px-4 sm:px-6 py-3 sm:py-3
-                           rounded-md bg-gray-900 hover:bg-gray-700 
-                           text-white font-medium transition-colors duration-150
-                           text-sm sm:text-base min-h-[44px] w-full sm:w-auto
-                           touch-manipulation">
-                <FiArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="whitespace-nowrap">View Results</span>
+                onClick={generateAudio}
+                disabled={audioLoading || videoLoading}
+                className="w-full flex items-center justify-center gap-2 mt-5 px-6 py-3 rounded-md bg-neutral-800 hover:bg-neutral-700 disabled:bg-neutral-700/50 text-white font-medium transition-colors duration-150">
+                {(audioLoading || videoLoading) ? (
+                  <>
+                    <LoadingSpinner size="sm" />
+                    {audioLoading ? 'Generating audio…' : 'Building video…'}
+                  </>
+                ) : (
+                  <>
+                    <FiMic className="w-5 h-5" />
+                    Generate Audio & Video
+                  </>
+                )}
               </button>
-            </div>
-
-          )}
-
-          {/* Media status indicators */}
-          {(hasAudioFiles || hasVideoPath) && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-              <div className={`flex items-center gap-2 text-sm ${hasAudioFiles ? 'text-gray-600 dark:text-gray-400' : 'text-neutral-400'}`}>
-                <FiMic className="w-4 h-4" />
-                <span>Audio: {hasAudioFiles ? 'Generated' : 'Pending'}</span>
+            ) : (
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                <button
+                  onClick={goToResults}
+                  className="flex-1 flex items-center justify-center mt-5 gap-2 px-4 sm:px-6 py-3 sm:py-3 rounded-md bg-neutral-800 hover:bg-neutral-700 text-white font-medium transition-colors duration-150 text-sm sm:text-base min-h-[44px] w-full sm:w-auto touch-manipulation">
+                  <FiArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span className="whitespace-nowrap">View Results</span>
+                </button>
               </div>
-              <div className={`flex items-center gap-2 text-sm ${hasVideoPath ? 'text-gray-600 dark:text-gray-400' : 'text-neutral-400'}`}>
-                <FiVideo className="w-4 h-4" />
-                <span>Video: {hasVideoPath ? 'Generated' : 'Pending'}</span>
+            )}
+
+            {/* Media status indicators */}
+            {(hasAudioFiles || hasVideoPath) && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 mt-4 border-t border-neutral-800">
+                <div className={`flex items-center gap-2 text-sm ${hasAudioFiles ? 'text-neutral-300' : 'text-neutral-500'}`}>
+                  <FiMic className="w-4 h-4" />
+                  <span>Audio: {hasAudioFiles ? 'Generated' : 'Pending'}</span>
+                </div>
+                <div className={`flex items-center gap-2 text-sm ${hasVideoPath ? 'text-neutral-300' : 'text-neutral-500'}`}>
+                  <FiVideo className="w-4 h-4" />
+                  <span>Video: {hasVideoPath ? 'Generated' : 'Pending'}</span>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+
+          </GlowCard>
         </motion.div>
+        </div>
       </div>
     </Layout>
   );

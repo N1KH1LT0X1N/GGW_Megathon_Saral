@@ -14,7 +14,7 @@ const Layout = ({ children, title, breadcrumbs = [] }) => {
   const closeSidebar = () => setSidebarOpen(false);
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 transition-colors duration-150">
+    <div className="min-h-screen bg-neutral-900 dark:bg-neutral-900 transition-colors duration-150">
       {/* Mobile overlay */}
       <AnimatePresence>
         {sidebarOpen && isMobile && (

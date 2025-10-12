@@ -17,6 +17,10 @@ import Layout from '../components/common/Layout';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ImageSelector from '../components/workflow/ImageSelector';
 import ChromeTabs from '../components/common/Pagination'; // Chrome-style tab bar
+// Reuse landing page UI pieces as requested (Button/Box)
+// import landing-style Button and Box (GlowCard) components
+import Button from '../components/ui/star-border';
+import Box from '../components/ui/spotlight-card';
 
 import { apiService } from '../services/api';
 import { useApi } from '../hooks/useApi';
@@ -30,38 +34,38 @@ const ScriptTextarea = ({ value, onChange, disabled = false }) => (
     disabled={disabled}
     className={`w-full min-h-[200px] px-3 py-2 border rounded-md resize-y transition-all duration-150 ${
       disabled
-      ? 'border-neutral-300 dark:border-neutral-600 bg-neutral-50 dark:bg-neutral-700 text-neutral-500 dark:text-neutral-400'
-      : 'border-neutral-300 dark:border-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500'
-    } bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500`}
+      ? 'border-neutral-700 bg-neutral-800 text-neutral-500'
+      : 'border-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-800 hover:border-neutral-600'
+    } bg-neutral-800 text-neutral-100 placeholder-neutral-500`}
     placeholder="Edit narration script here…"
-    />
-    );
+  />
+);
 
 const BulletPointInput = ({ value, onChange, onRemove, disabled = false }) => (
   <div className="flex items-center gap-2">
-    <span className="text-neutral-400 dark:text-neutral-500">•</span>
+    <span className="text-neutral-400">•</span>
     <input
       value={value}
       onChange={(e) => onChange(e.target.value)}
       disabled={disabled}
       className={`flex-1 px-3 py-2 text-sm border rounded-md transition-colors duration-150 ${
         disabled
-        ? 'border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-700 text-neutral-500 dark:text-neutral-400'
-        : 'border-neutral-300 dark:border-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500'
-      } bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500`}
+        ? 'border-neutral-700 bg-neutral-800 text-neutral-500'
+        : 'border-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-800 hover:border-neutral-600'
+      } bg-neutral-800 text-neutral-100 placeholder-neutral-500`}
       placeholder="Enter bullet point..."
     />
     {!disabled && (
       <button
         onClick={onRemove}
-        className="p-1 text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-150"
+        className="p-1 text-red-400 hover:text-red-300 transition-colors duration-150"
         title="Remove bullet point"
       >
         <FiMinus className="w-4 h-4" />
       </button>
-      )}
+    )}
   </div>
-  );
+);
 
 const SectionPanel = ({
   section,
@@ -122,7 +126,7 @@ const SectionPanel = ({
     >
 
       {/* Script Editor */}
-      <div className="bg-white dark:bg-neutral-900 rounded-md p-6 border border-neutral-300 dark:border-neutral-600 space-y-1">
+  <div className="bg-[#0b0b0b] rounded-md p-6 border border-neutral-800 space-y-1">
         <div className="flex items-center justify-between">
           {/* Section Header */}
           <div className="flex items-center justify-between">
@@ -134,22 +138,22 @@ const SectionPanel = ({
           {/* Status indicators */}
               <div className="flex items-center space-x-2">
                 {selectedImage && (
-                  <div className="flex items-center space-x-1 px-2 py-1 bg-green-100 dark:bg-green-900/20 rounded-full">
-                    <FiImage className="w-3 h-3 text-green-600 dark:text-green-400" />
-                    <span className="text-xs text-green-600 dark:text-green-400">Image</span>
+                  <div className="flex items-center space-x-1 px-2 py-1 bg-green-900/20 rounded-full">
+                    <FiImage className="w-3 h-3 text-green-300" />
+                    <span className="text-xs text-green-300">Image</span>
                   </div>
                   )}
 
                 {hasLocalChanges && (
-                  <div className="flex items-center space-x-1 px-2 py-1 bg-yellow-100 dark:bg-yellow-900/20 rounded-full">
-                    <FiEdit3 className="w-3 h-3 text-yellow-600 dark:text-yellow-400" />
-                    <span className="text-xs text-yellow-600 dark:text-yellow-400">Modified</span>
+                  <div className="flex items-center space-x-1 px-2 py-1 bg-yellow-900/20 rounded-full">
+                    <FiEdit3 className="w-3 h-3 text-yellow-300" />
+                    <span className="text-xs text-yellow-300">Modified</span>
                   </div>
                   )}
               </div>
             </div>
           </div>
-          <div className="flex items-center space-x-2 text-xs text-neutral-500 dark:text-neutral-400">
+          <div className="flex items-center space-x-2 text-xs text-neutral-400">
             <span>{localScript.length} characters</span>
             <span>•</span>
             <span>~{Math.ceil(localScript.length / 150)} minutes</span>
@@ -166,8 +170,8 @@ const SectionPanel = ({
       {/* Bullet Points + Image picker */}
       <div className="grid lg:grid-cols-2 gap-3">
         {/* Bullet Points */}
-        <div className="bg-white dark:bg-neutral-900 rounded-md p-6 border border-neutral-300 dark:border-neutral-600 space-y-4">
-          <h4 className="font-medium flex items-center gap-2 text-neutral-900 dark:text-white">
+  <div className="bg-[#0b0b0b] rounded-md p-6 border border-neutral-800 space-y-4">
+          <h4 className="font-medium flex items-center gap-2 text-neutral-100">
             <FiList className="w-4 h-4" /> Slide Bullet Points
           </h4>
 
@@ -183,8 +187,8 @@ const SectionPanel = ({
                 ))}
             
             {localBullets.length === 0 ? (
-              <div className="text-center py-6 text-neutral-500 dark:text-neutral-400 italic border-2 border-dashed border-neutral-200 dark:border-neutral-700 rounded-md">
-                <FiList className="w-8 h-8 mx-auto mb-2 opacity-50" />
+              <div className="text-center py-6 text-neutral-400 italic border-2 border-dashed border-neutral-700 rounded-md">
+                <FiList className="w-8 h-8 mx-auto mb-2 opacity-40" />
                 <p>No bullet points yet.</p>
                 <p className="text-xs mt-1">Add bullet points manually.</p>
               </div>
@@ -192,7 +196,7 @@ const SectionPanel = ({
               <button
                 onClick={addBullet}
                 disabled={savingScripts}
-                className="w-full py-2 border-2 border-dashed border-neutral-300 dark:border-neutral-600 rounded-md text-sm text-neutral-500 hover:border-neutral-400 dark:hover:border-neutral-500 transition disabled:opacity-50"
+                className="w-full py-2 border-2 border-dashed border-neutral-700 rounded-md text-sm text-neutral-400 hover:border-neutral-600 transition disabled:opacity-50"
               >
                 + Add bullet point
               </button>
@@ -201,12 +205,12 @@ const SectionPanel = ({
           </div>
 
         {/* Image picker */}
-          <div className="bg-white dark:bg-neutral-900 rounded-md p-6 border border-neutral-300 dark:border-neutral-600 space-y-4">
-            <h4 className="font-medium flex items-center gap-2 text-neutral-900 dark:text-white">
+          <div className="bg-neutral-900 rounded-md p-6 border border-neutral-800 space-y-4">
+            <h4 className="font-medium flex items-center gap-2 text-neutral-100">
               <FiImage className="w-4 h-4" /> Slide Image
             </h4>
 
-            <div className="aspect-video bg-neutral-100 dark:bg-gray-900 rounded-md overflow-hidden border border-neutral-200 dark:border-neutral-700 flex items-center justify-center">
+            <div className="aspect-video bg-[#121212] rounded-md overflow-hidden border border-neutral-800 flex items-center justify-center">
               {selectedImage ? (
                 <div className="relative w-full h-full">
                   <img
@@ -223,9 +227,9 @@ const SectionPanel = ({
                 </div>
                 ) : (
                 <div className="text-center">
-                  <FiImage className="w-8 h-8 text-neutral-400 dark:text-gray-800 mx-auto mb-2" />
-                  <span className="text-neutral-400 dark:text-gray-500">No image selected</span>
-                  <p className="text-xs text-neutral-400 dark:text-gray-500 mt-1">Text-only slide</p>
+                  <FiImage className="w-8 h-8 text-neutral-400 mx-auto mb-2" />
+                  <span className="text-neutral-400">No image selected</span>
+                  <p className="text-xs text-neutral-400 mt-1">Text-only slide</p>
                 </div>
                 )}
               </div>
@@ -233,7 +237,7 @@ const SectionPanel = ({
               <button
                 onClick={() => onSelectImage(section)}
                 disabled={savingScripts}
-                className="w-full px-4 py-2 bg-neutral-900 hover:bg-neutral-700 dark:bg-gray-900 dark:hover:bg-gray-600 text-white dark:text-white font-medium rounded-md transition-colors duration-150 disabled:opacity-50"
+                className="w-full px-4 py-2 bg-[#121212] hover:bg-[#1a1a1a] text-white font-medium rounded-md transition-colors duration-150 disabled:opacity-50"
               >
                 {selectedImage ? 'Change Image' : 'Select Image'}
               </button>
@@ -244,6 +248,32 @@ const SectionPanel = ({
 };
 
 const ScriptGeneration = () => {
+  // Force Tailwind "dark" mode for this page only by toggling the 'dark' class
+  // on the root element while this component is mounted. This makes all
+  // `dark:` utility variants render as dark for this page without changing
+  // global user preferences.
+  useEffect(() => {
+    const root = document.documentElement;
+    const hadDark = root.classList.contains('dark');
+    if (!hadDark) root.classList.add('dark');
+    // Also force body background/text so the entire page (including margins)
+    // looks like the landing dark page while this view is mounted.
+    const prevBodyBg = document.body.style.backgroundColor;
+    const prevBodyColor = document.body.style.color;
+    // use a landing-style gradient background for the whole page
+    const prevBodyImage = document.body.style.backgroundImage;
+    document.body.style.backgroundImage = 'linear-gradient(180deg, #0f1724 0%, #000000 50%, #0b1220 100%)';
+    document.body.style.backgroundColor = '';
+    document.body.style.color = '#e5e7eb'; // neutral-100
+
+    return () => {
+      if (!hadDark) root.classList.remove('dark');
+      // restore body styles
+      document.body.style.backgroundImage = prevBodyImage || '';
+      document.body.style.backgroundColor = prevBodyBg || '';
+      document.body.style.color = prevBodyColor || '';
+    };
+  }, []);
   const {
     paperId,
     metadata,
@@ -528,7 +558,9 @@ const ScriptGeneration = () => {
   /* ------------------------------------------------------------------ */
   return (
     <Layout title="" breadcrumbs={breadcrumbs}>
-      <div className="max-w-7xl mx-auto space-y-0">
+      {/* Force dark theme styling for this page only by using dark background classes */}
+  <div className="min-h-screen py-6 bg-[#0b0b0b] text-neutral-100">
+        <div className="max-w-7xl mx-auto space-y-0">
         {/* Header */}
 
 
@@ -536,13 +568,13 @@ const ScriptGeneration = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-neutral-800 rounded-md p-6 border border-neutral-300 dark:border-neutral-600 space-y-6 mb-2"
+  className="bg-[#0b0b0b] rounded-md p-6 border border-neutral-700 space-y-6 mb-2"
         >
           <div>
-            <h2 className="text-2xl font-semibold text-neutral-900 dark:text-white">
+            <h2 className="text-2xl font-semibold text-white">
               {metadata?.title || 'Generate Presentation Scripts'}
             </h2>
-            <p className="text-neutral-600 dark:text-neutral-400">
+            <p className="text-neutral-400">
               Create and customize scripts with bullet points for your academic presentation
             </p>
           </div>
@@ -554,56 +586,43 @@ const ScriptGeneration = () => {
             )}
 
           <div className="flex flex-wrap gap-3">
-            <button
-              onClick={handleGenerateScripts}
-              disabled={generating}
-              className="flex items-center gap-2 px-4 py-2 
-                         bg-gray-900 hover:bg-gray-700 disabled:bg-gray-400 
-                         text-white font-medium rounded-md transition-colors duration-150"
-            >
-              {generating ? (
-                <>
-                  <LoadingSpinner size="sm" /> Generating
-                </>
-              ) : (
-                <>
-                  <FiRefreshCw className="w-4 h-4" />
-                  {hasScripts ? 'Regenerate' : 'Generate'}
-                </>
-              )}
-            </button>
+            {/* Use landing-style Button as primary action visual but keep behaviour */}
+            <Button as="button" onClick={handleGenerateScripts} className="inline-block" disabled={generating}>
+              <div className="flex items-center gap-2 px-4">
+                {generating ? (
+                  <>
+                    <LoadingSpinner size="sm" /> Generating
+                  </>
+                ) : (
+                  <>
+                    <FiRefreshCw className="w-4 h-4" />
+                    {hasScripts ? 'Regenerate' : 'Generate'}
+                  </>
+                )}
+              </div>
+            </Button>
 
             {hasScripts && (
               <>
-                <button
-                  onClick={handleSaveScripts}
-                  disabled={savingScripts}
-                  className="flex items-center gap-2 px-4 py-2 
-                             bg-gray-900 hover:bg-gray-700 disabled:bg-gray-400 
-                             text-white font-medium rounded-md transition-colors duration-150"
-                >
-                  {savingScripts ? (
-                    <>
-                      <LoadingSpinner size="sm" /> Saving
-                    </>
-                  ) : (
-                    <>
-                      <FiSave className="w-4 h-4" /> Save Scripts
-                    </>
-                  )}
-                </button>
+                <Button as="button" onClick={handleSaveScripts} className="inline-block" disabled={savingScripts}>
+                  <div className="flex items-center gap-2 px-4">
+                    {savingScripts ? (
+                      <>
+                        <LoadingSpinner size="sm" /> Saving
+                      </>
+                    ) : (
+                      <>
+                        <FiSave className="w-4 h-4" /> Save Scripts
+                      </>
+                    )}
+                  </div>
+                </Button>
 
-                <button
-                  onClick={handleContinueToSlides}
-                  disabled={hasChanges || savingScripts}
-                  className="flex items-center gap-2 px-4 py-2 
-                             bg-gray-900 hover:bg-gray-700 disabled:bg-gray-400 
-                             text-white font-medium rounded-md transition-colors duration-150 
-                             disabled:bg-gray-100 dark:disabled:bg-gray-700 
-                             disabled:text-gray-400 dark:disabled:text-gray-500"
-                >
-                  <FiCheck className="w-4 h-4" /> Continue to Slides
-                </button>
+                <Button as="button" onClick={handleContinueToSlides} className="inline-block" disabled={hasChanges || savingScripts}>
+                  <div className="flex items-center gap-2 px-4">
+                    <FiCheck className="w-4 h-4" /> Continue to Slides
+                  </div>
+                </Button>
               </>
             )}
           </div>
@@ -612,6 +631,7 @@ const ScriptGeneration = () => {
 
         {/* Chrome Tabs */}
           {hasScripts && (
+            <div className="mt-4">
             <ChromeTabs
               tabs={sectionKeys.map((k) => ({
                 id: k,
@@ -622,10 +642,12 @@ const ScriptGeneration = () => {
               activeTab={activeTab}
               onTabClick={setActiveTab}
               />
+               </div>
               )}
 
         {/* Section Panel */}
           {hasScripts && activeTab && (
+            <Box className="p-0 bg-[#0b0b0b] border-none">
             <SectionPanel
               key={activeTab}
               section={activeTab}
@@ -641,6 +663,7 @@ const ScriptGeneration = () => {
               generateBullets={generateBullets}
               hasLocalChanges={localChanges[activeTab]}
               />
+            </Box>
               )}
 
         {/* Empty state */}
@@ -648,25 +671,25 @@ const ScriptGeneration = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-center py-12 bg-neutral-50 dark:bg-neutral-800 rounded-md border-2 border-dashed border-neutral-300 dark:border-neutral-600"
+              className="text-center py-12 bg-[#0b0b0b] rounded-md border-2 border-dashed border-neutral-800"
             >
-              <FiEdit3 className="w-16 h-16 text-neutral-400 dark:text-neutral-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2">
+              <FiEdit3 className="w-16 h-16 text-neutral-400 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-white mb-2">
                 No Scripts Generated Yet
               </h3>
-              <p className="text-neutral-600 dark:text-neutral-400 mb-6">
+              <p className="text-neutral-400 mb-6">
                 Click "Generate" to let the AI create narration scripts from your paper.
               </p>
-              <button
-                onClick={handleGenerateScripts}
-                disabled={generating}
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-400 text-white font-medium rounded-md transition-colors duration-150 mx-auto"
-              >
-                <FiPlay className="w-4 h-4" /> Generate Scripts
-              </button>
+              <Button as="button" onClick={handleGenerateScripts} className="mx-auto" disabled={generating}>
+                <div className="flex items-center gap-2 px-4">
+                  <FiPlay className="w-4 h-4" /> Generate Scripts
+                </div>
+              </Button>
             </motion.div>
             )}
+      {/* Image selector modal */}
         </div>
+      </div>
 
       {/* Image selector modal */}
         <AnimatePresence>
