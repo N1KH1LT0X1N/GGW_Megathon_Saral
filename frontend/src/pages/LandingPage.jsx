@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiArrowRight, FiFileText, FiMic, FiVideo, FiZap, FiCheck, FiHeadphones, FiGitBranch } from 'react-icons/fi';
+import { FiArrowRight, FiFileText, FiMic, FiVideo, FiZap, FiCheck, FiHeadphones, FiGitBranch, FiFilm } from 'react-icons/fi';
 import StarBorder from '../components/ui/star-border';
 import { GlowCard } from '../components/ui/spotlight-card';
 import ComplexityButton from '../components/common/ComplexityButton';
@@ -140,6 +140,11 @@ const LandingPage = () => {
       description: 'Automatically create professional presentation videos combining slides, narration, and visual elements.'
     },
     {
+      icon: FiFilm,
+      title: 'Visual Storytelling',
+      description: 'Transform research into cinematic narrative videos with AI-generated imagery and engaging storytelling.'
+    },
+    {
       icon: FiHeadphones,
       title: 'Podcast Generation',
       description: 'Transform research papers into engaging podcast episodes with natural conversations and explanations.'
@@ -176,6 +181,12 @@ const LandingPage = () => {
             </div>
             
             <div className="flex items-center gap-4">
+              <StarBorder as={Link} to="/visual-storytelling" className="inline-block">
+                <div className="text-sm font-medium text-white flex items-center gap-1">
+                  <FiFilm className="w-4 h-4" />
+                  <span>Visual Story</span>
+                </div>
+              </StarBorder>
               <StarBorder as={Link} to="/podcast" className="inline-block">
                 <div className="text-sm font-medium text-white">Podcast</div>
               </StarBorder>

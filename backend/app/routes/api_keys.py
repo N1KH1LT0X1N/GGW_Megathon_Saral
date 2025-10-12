@@ -55,7 +55,8 @@ async def get_api_keys_status():
     return {
         "gemini_configured": "gemini_key" in api_keys_storage or bool(os.getenv("GEMINI_API_KEY")),
         "sarvam_configured": "sarvam_key" in api_keys_storage or bool(os.getenv("SARVAM_API_KEY")),
-        "openai_configured": "openai_key" in api_keys_storage
+        "openai_configured": "openai_key" in api_keys_storage,
+        "huggingface_configured": "huggingface_key" in api_keys_storage
     }
 
 def get_api_keys():
@@ -64,6 +65,13 @@ def get_api_keys():
         sarvam_key = os.getenv("SARVAM_API_KEY")
         if sarvam_key:
             api_keys_storage["sarvam_key"] = sarvam_key
+    
+    # Load Hugging Face API key from .env if not set
+    if "huggingface_key" not in api_keys_storage or not api_keys_storage["huggingface_key"]:
+        huggingface_key = os.getenv("HUGGINGFACE_API_KEY")
+        if huggingface_key:
+            api_keys_storage["huggingface_key"] = huggingface_key
+            print("Loaded Hugging Face API key from .env")
 
     # Handle multiple Gemini keys: GEMINI_API_KEY_1, GEMINI_API_KEY_2, ...
     gemini_keys = []
@@ -81,27 +89,33 @@ def get_api_keys():
         if key:
             gemini_keys.append(key)
 
-    # Try each Gemini key until one works
-    for gemini_key in gemini_keys:
-        try:
-            import google.generativeai as genai
-            genai.configure(api_key=gemini_key)
-            model = genai.GenerativeModel('gemini-2.0-flash')
-            model.generate_content("Hello")
-            api_keys_storage["gemini_key"] = gemini_key
-            break
-        except Exception:
-            continue  # Try next key
-    else:
-        # No valid Gemini key found
+    # Store all keys for rotation
+    if gemini_keys:
+        api_keys_storage["gemini_keys"] = gemini_keys
+        # Use first key initially
+        if "gemini_key" not in api_keys_storage:
+            api_keys_storage["gemini_key"] = gemini_keys[0]
+            api_keys_storage["current_gemini_index"] = 0
+            print(f"✓ Loaded {len(gemini_keys)} Gemini API keys for rotation")
+    
+    # Only raise error if absolutely no Gemini key exists
+    if "gemini_key" not in api_keys_storage and not gemini_keys:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="No valid Gemini API key found. Please check your .env file."
-        )
-
-    if not api_keys_storage or ("gemini_key" not in api_keys_storage and not os.getenv("GEMINI_API_KEY")):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="API keys not configured. Please setup API keys first."
+            detail="No Gemini API key found. Please add GEMINI_API_KEY to your .env file."
         )
     return api_keys_storage
+
+def rotate_gemini_key():
+    """Rotate to the next Gemini API key when quota is exceeded."""
+    if "gemini_keys" not in api_keys_storage or len(api_keys_storage["gemini_keys"]) <= 1:
+        return False  # No other keys to rotate to
+    
+    current_index = api_keys_storage.get("current_gemini_index", 0)
+    next_index = (current_index + 1) % len(api_keys_storage["gemini_keys"])
+    
+    api_keys_storage["gemini_key"] = api_keys_storage["gemini_keys"][next_index]
+    api_keys_storage["current_gemini_index"] = next_index
+    
+    print(f"🔄 Rotated to Gemini API key #{next_index + 1}")
+    return True
