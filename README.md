@@ -9,13 +9,13 @@
 
 Transform research papers into educational videos, podcasts, mind maps, and visual stories using AI.
 
-**Quick Links:** [Live Demo](https://coming-soon) | [Chrome Extension](#-chrome-extension) | [Contact](mailto:democratise.research@gmail.com) | [WhatsApp Bot](https://wa.me/14155238886?text=join%20fallen-basket)
+**Quick Links:** [Live Demo](https://coming-soon) | [Chrome Extension](#-chrome-extension) | [WhatsApp Bot](#-whatsapp-bot) | [Contact](mailto:democratise.research@gmail.com)
 
 ---
 
 ## 📋 Table of Contents
 
-- [Overview](#-overview) | [Features](#-key-features) | [Installation](#️-installation) | [Configuration](#-configuration) | [Running](#️-running) | [Chrome Extension](#-chrome-extension) | [Troubleshooting](#-troubleshooting) | [API Docs](#-api-documentation) | [Contributing](#-contributing) | [License](#-license)
+- [Overview](#-overview) | [Features](#-key-features) | [Installation](#️-installation) | [Configuration](#-configuration) | [Running](#️-running) | [Chrome Extension](#-chrome-extension) | [WhatsApp Bot](#-whatsapp-bot) | [Troubleshooting](#-troubleshooting) | [API Docs](#-api-documentation) | [Contributing](#-contributing) | [License](#-license)
 
 ---
 
@@ -32,7 +32,7 @@ Research Paper → AI Processing → 📹 Video | 🎙️ Podcast | 🗺️ Mind
 - 🗺️ Visual mind maps
 - 📖 Cinematic storytelling videos
 - 🔌 Chrome extension for instant processing
-- 💬 WhatsApp bot support
+- 💬 WhatsApp bot for 24/7 research assistance
 - 🌐 Multi-language (English/Hindi/Gujarati)
 
 ---
@@ -57,7 +57,8 @@ Research Paper → AI Processing → 📹 Video | 🎙️ Podcast | 🗺️ Mind
 **Educators:** Lecture content, teaching materials, multi-format resources  
 **Researchers:** Conference presentations, accessible findings, outreach  
 **Institutions:** Content libraries, online courses, research accessibility  
-**Chrome Extension:** Process papers instantly from any research website
+**Chrome Extension:** Process papers instantly from any research website  
+**WhatsApp Bot:** Chat-based research assistance, anywhere, anytime
 
 📄 **Tutorial:** [Download PDF](tutorial.pdf) for complete setup and usage guide
 
@@ -80,6 +81,10 @@ GGW_Megathon_Saral/
 │   ├── app/           # Main application (routes/, services/, models/)
 │   └── temp/          # Generated files (papers, videos, podcasts, mindmaps)
 └── frontend/          # React app (pages, components, contexts)
+
+Related Repository:
+└── Research-Paper-Chatbot/  # WhatsApp bot companion (Twilio + Gemini)
+    └── https://github.com/N1KH1LT0X1N/Research-Paper-Chatbot
 ```
 
 ---
@@ -171,7 +176,97 @@ Configure backend URL (`http://localhost:8000`), complexity level, language, the
 
 ---
 
-## 🔍 Troubleshooting
+## � WhatsApp Bot
+
+Your 24/7 AI research assistant for semantic search, Q&A, and summarization of research papers via WhatsApp.
+
+### 🚀 Quick Start
+
+**Join the Bot:** [WhatsApp Link](https://wa.me/14155238886?text=join%20pocket-afternoon)  
+**Repository:** [Research-Paper-Chatbot](https://github.com/N1KH1LT0X1N/Research-Paper-Chatbot)  
+**Live Demo:** [https://research-paper-chatbot-2.onrender.com](https://research-paper-chatbot-2.onrender.com/)
+
+### ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| **Semantic Search** | Natural language search across research papers |
+| **Q&A System** | Ask questions about specific papers and get scholarly answers |
+| **Paper Summaries** | Get concise summaries of research papers |
+| **Topic Explanations** | Simple explanations suitable for different learning levels |
+| **Activities Generator** | Generate educational activities based on research topics |
+
+### 📱 Usage
+
+Send messages to the WhatsApp bot:
+
+```
+# Search for papers
+"transformer attention"
+"retrieval augmented generation"
+
+# Select a paper
+"select 1"
+
+# Start Q&A session
+"ready for Q&A"
+"tell me more about attention is all you need"
+
+# Get explanations
+"Explain transformers"
+
+# Generate activities
+"Activities machine learning"
+```
+
+### 🛠️ Technical Stack
+
+- **Backend:** Flask + Python 3.9+
+- **AI Engine:** Google Gemini API
+- **Messaging:** Twilio WhatsApp API
+- **Search:** Semantic search with arXiv integration
+- **PDF Processing:** PyMuPDF for paper extraction
+
+### 🔧 Self-Hosting (Optional)
+
+If you want to deploy your own instance:
+
+```bash
+# Clone the bot repository
+git clone https://github.com/N1KH1LT0X1N/Research-Paper-Chatbot.git
+cd Research-Paper-Chatbot
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure environment
+# Create .env file with:
+# TWILIO_ACCOUNT_SID=your_sid
+# TWILIO_AUTH_TOKEN=your_token
+# GEMINI_API_KEY=your_key
+
+# Run the bot
+python research_bot.py
+
+# Expose with ngrok for webhook
+ngrok http 5000
+```
+
+**Webhook Setup:** Configure Twilio WhatsApp sandbox webhook to point to `https://your-ngrok-url.ngrok.io/whatsapp`
+
+### 🌟 Integration with SARAL AI
+
+The WhatsApp bot complements the SARAL AI web platform by providing:
+- **Mobile-First Access:** Research assistance on-the-go without browser
+- **Conversational Interface:** Natural language interactions
+- **Quick Queries:** Instant answers without full video generation
+- **Accessibility:** Chat-based interface for users with limited connectivity
+
+Use the **web platform** for comprehensive content generation (videos, podcasts, mindmaps) and the **WhatsApp bot** for quick research queries and paper discovery.
+
+---
+
+## �🔍 Troubleshooting
 
 **Common Issues:**
 - ImportError → `pip install -r requirements.txt` in venv
@@ -183,8 +278,9 @@ Configure backend URL (`http://localhost:8000`), complexity level, language, the
 - npm install fails → Delete `node_modules`, reinstall
 - No audio in video → Verify Sarvam API key
 - Extension issues → Reload from `chrome://extensions/`
+- WhatsApp bot not responding → Check Twilio webhook configuration and API keys
 
-**Get Help:** [GitHub Issues](https://github.com/yourusername/GGW_Megathon_Saral/issues) | [Email](mailto:democratise.research@gmail.com) | [WhatsApp Bot](https://wa.me/14155238886?text=join%20fallen-basket)
+**Get Help:** [GitHub Issues](https://github.com/yourusername/GGW_Megathon_Saral/issues) | [Email](mailto:democratise.research@gmail.com) | [WhatsApp Bot](https://wa.me/14155238886?text=join%20pocket-afternoon)
 
 ---
 
@@ -216,6 +312,14 @@ Backend: FastAPI, Google Gemini API, Sarvam AI, MoviePy, FFmpeg, PyMuPDF, PIL
 **Submit PRs:** Fork → Create branch → Commit → Push → Open PR  
 **Code Style:** Python (PEP 8), JavaScript (ESLint), Conventional commits
 
+### 🏗️ Project Ecosystem
+
+This project consists of two complementary repositories:
+1. **[SARAL AI Platform](https://github.com/N1KH1LT0X1N/GGW_Megathon_Saral)** (This Repo) - Full-featured web application
+2. **[WhatsApp Bot](https://github.com/N1KH1LT0X1N/Research-Paper-Chatbot)** - Mobile-first chat interface
+
+Both repositories are maintained by the SARAL AI team and work together to democratize research access.
+
 ---
 
 ## 📄 License
@@ -235,8 +339,9 @@ MIT License © 2025 SARAL AI Team - See [LICENSE](LICENSE) for details
 ## 📞 Contact
 
 **Email:** democratise.research@gmail.com  
-**WhatsApp Bot:** [Enable Bot](https://wa.me/14155238886?text=join%20fallen-basket)  
-**GitHub Issues:** [Report Bugs](https://github.com/yourusername/GGW_Megathon_Saral/issues)
+**WhatsApp Bot:** [Join Bot](https://wa.me/14155238886?text=join%20pocket-afternoon)  
+**GitHub Issues:** [Report Bugs](https://github.com/yourusername/GGW_Megathon_Saral/issues)  
+**Bot Repository:** [Research-Paper-Chatbot](https://github.com/N1KH1LT0X1N/Research-Paper-Chatbot)
 
 ---
 
@@ -244,6 +349,6 @@ MIT License © 2025 SARAL AI Team - See [LICENSE](LICENSE) for details
 
 ⭐ **Star this repository if you found it helpful!**
 
-Made with ❤️ by the SARAL AI Team | **Making Research Accessible to Everyone**
+Made with ❤️ by the GitGoneWild Team | **Making Research Accessible to Everyone**
 
 </div>
