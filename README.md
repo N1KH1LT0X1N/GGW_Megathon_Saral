@@ -60,7 +60,7 @@ Research Paper → AI Processing → 📹 Video | 🎙️ Podcast | 🗺️ Mind
 **Chrome Extension:** Process papers instantly from any research website  
 **WhatsApp Bot:** Chat-based research assistance, anywhere, anytime
 
-📄 **Tutorial:** [Download PDF](tutorial.pdf) for complete setup and usage guide
+📄 **Tutorial:** [Download PDF](tutorial.pdf) for complete setup and usage guide.
 
 ---
 
